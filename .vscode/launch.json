@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Rails",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "bin/rails",
+            "args": ["server", "-b", "0.0.0.0", "-p", "3000"]
+        },
+    ]
+}

@@ -1,0 +1,61 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+  slack: circleci/slack@3.4.2
+  codecov: codecov/codecov@1.0.5
+
+workflows:
+  spec:
+    jobs:
+      - build:
+          context:
+            - credentials
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7
+        environment:
+          - TZ: Asia/Tokyo
+          - RAILS_ENV: test
+          - DATABASE_HOST: 127.0.0.1
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+      - image: circleci/mysql:5.7
+        environment:
+          - MYSQL_ROOT_PASSWORD: password
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get dist-upgrade && apt-get update && apt-get install -y build-essential graphviz
+            bundle install
+      - run:
+          name: Run database
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
+      - run:
+          name: Initialize database
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:schema:load
+      - run:
+          name: Minitest
+          command: |
+            rake test
+      - store_artifacts:
+          path: coverage
+      - codecov/upload:
+          file: coverage/.resultset.json
+      - slack/status:
+          success_message: '<https://codecov.io/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH/app|Codecov> By $CIRCLE_USERNAME :innocent:'
+          failure_message: '<https://app.circleci.com/pipelines/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME?branch=$CIRCLE_BRANCH|CircleCI> By $CIRCLE_USERNAME :rage:'
+          webhook: '${SLACK_WEBHOOK_URL}'
