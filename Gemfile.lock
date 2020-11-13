@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/panicboat/api-plugin
-  revision: 95a54234094ad4f0e94ef5b62c8f2c1e84216982
+  revision: 28dbcca03bb01a95d793af489c7a08dfd36d7506
   specs:
     panicboat (1.0.0)
       rails (~> 6.0.3, >= 6.0.3.2)
