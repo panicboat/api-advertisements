@@ -2,12 +2,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Rails",
+            "name": "Debug Puma",
             "type": "Ruby",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "program": "bin/rails",
             "args": ["server", "-b", "0.0.0.0", "-p", "3000"]
+        },
+        {
+            "name": "Debug Spec",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "bin/rake",
+            "args": ["test"],
+            "env": {
+                "TEST": ""
+            },
         },
     ]
 }
