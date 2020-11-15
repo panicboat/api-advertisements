@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/panicboat/api-plugin
+  remote: https://github.com/panicboat/api-engine
   revision: 28dbcca03bb01a95d793af489c7a08dfd36d7506
   specs:
     panicboat (1.0.0)

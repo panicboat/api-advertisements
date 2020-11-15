@@ -48,10 +48,10 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # depencies:
-gem 'panicboat', git: 'https://github.com/panicboat/api-plugin'
-gem 'faraday'
-gem 'jwt'
-gem 'json-jwt'
+gem 'panicboat', git: 'https://github.com/panicboat/api-engine'
 gem 'trailblazer-rails'
 gem 'multi_json' # https://github.com/trailblazer/representable#dependencies
 gem 'reform-rails'
+gem 'faraday'
+gem 'jwt'
+gem 'json-jwt'
