@@ -62,6 +62,7 @@ group :production do
   gem 'jrjackson', platform: :jruby # https://github.com/aws/aws-xray-sdk-ruby#installing
 end
 
+# gem 'panicboat', path: '/app/engine'
 gem 'panicboat', git: 'https://github.com/panicboat/api-engine'
 gem 'trailblazer-rails'
 gem 'multi_json' # https://github.com/trailblazer/representable#dependencies
