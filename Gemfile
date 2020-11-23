@@ -55,3 +55,6 @@ gem 'reform-rails'
 gem 'faraday'
 gem 'jwt'
 gem 'json-jwt'
+gem 'aws-xray-sdk', require: ['aws-xray-sdk/facets/rails/railtie']
+gem 'oj', platform: :mri # https://github.com/aws/aws-xray-sdk-ruby#installing
+gem 'jrjackson', platform: :jruby # https://github.com/aws/aws-xray-sdk-ruby#installing
