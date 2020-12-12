@@ -3,7 +3,7 @@ module Advertisers::Contract
     class Show < Abstract::Contract
       property  :id
 
-      validates :id, presence: true, numericality: { only_integer: true }
+      validates :id, numericality: true, allow_blank: false
     end
   end
 end

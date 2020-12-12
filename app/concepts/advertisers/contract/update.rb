@@ -8,8 +8,8 @@ module Advertisers::Contract
     property  :contact
     property  :note
 
-    validates :id,              presence: true,   numericality: { only_integer: true }
-    validates :agency_id,       presence: false,  numericality: { only_integer: true }
+    validates :id,              numericality: true, allow_blank: false
+    validates :agency_id,       numericality: true, allow_blank: true
     validates :name,            presence: true
     validates :url,             presence: true
     validate  :uniqueness
