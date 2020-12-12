@@ -7,7 +7,7 @@ module Advertisers::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::Advertiser.paging(contract.limit, contract.offset).order(contract.order)
       data = data.where({ agency_id: contract.agency_id }) if contract.agency_id.present?
       ctx[:model] = OpenStruct.new({ Advertisers: data })
