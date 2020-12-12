@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/panicboat/api-engine
-  revision: 06b50ab5a512403d404c47af096e1f511dcc7015
+  revision: 0e8c90db09da5e194825a71876eca1e50cb6c081
   specs:
     panicboat (1.0.0)
       rails (~> 6.0.3, >= 6.0.3.2)
@@ -63,7 +63,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    aes_key_wrap (1.1.0)
     ast (2.4.1)
     aws-eventstream (1.1.0)
     aws-partitions (1.397.0)
@@ -82,7 +81,6 @@ GEM
       multi_json (~> 1)
     backport (1.1.2)
     benchmark (0.1.0)
-    bindata (2.4.8)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -122,11 +120,6 @@ GEM
     jaro_winkler (1.5.4)
     jmespath (1.4.0)
     json (2.3.1)
-    json-jwt (1.13.0)
-      activesupport (>= 4.2)
-      aes_key_wrap
-      bindata
-    jwt (2.2.2)
     listen (3.3.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -314,8 +307,6 @@ DEPENDENCIES
   debase
   faraday
   jrjackson
-  json-jwt
-  jwt
   listen (~> 3.2)
   multi_json
   mysql2 (>= 0.4.4)

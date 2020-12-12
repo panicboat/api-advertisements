@@ -27,7 +27,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -38,35 +38,33 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 #--------------------------------------------------
 # depencies
 #--------------------------------------------------
 group :development do
   gem 'debase'
+  gem 'rails-erd'
   gem 'ruby-debug-ide'
   gem 'solargraph'
-  gem 'rails-erd'
 end
 
 group :test do
-  gem 'trailblazer-test'
-  gem 'simplecov'
   gem 'codecov'
+  gem 'simplecov'
+  gem 'trailblazer-test'
 end
 
 group :production do
   gem 'aws-xray-sdk', require: ['aws-xray-sdk/facets/rails/railtie']
-  gem 'oj', platform: :mri # https://github.com/aws/aws-xray-sdk-ruby#installing
   gem 'jrjackson', platform: :jruby # https://github.com/aws/aws-xray-sdk-ruby#installing
+  gem 'oj', platform: :mri # https://github.com/aws/aws-xray-sdk-ruby#installing
 end
 
 # gem 'panicboat', path: '/app/engine'
 gem 'panicboat', git: 'https://github.com/panicboat/api-engine'
-gem 'trailblazer-rails'
+gem 'faraday'
 gem 'multi_json' # https://github.com/trailblazer/representable#dependencies
 gem 'reform-rails'
-gem 'faraday'
-gem 'jwt'
-gem 'json-jwt'
+gem 'trailblazer-rails'
