@@ -13,19 +13,19 @@ class AdvertisersController < ApplicationController
 
   def create
     run Advertisers::Operation::Create, params: params do |ctx|
-      render json: represent(Advertisers::Representer::Show, ctx)
+      render json: represent(Advertisers::Representer::Create, ctx)
     end
   end
 
   def update
     run Advertisers::Operation::Update, params: params do |ctx|
-      render json: represent(Advertisers::Representer::Show, ctx)
+      render json: represent(Advertisers::Representer::Update, ctx)
     end
   end
 
   def destroy
     run Advertisers::Operation::Destroy, params: params do |ctx|
-      render json: represent(Advertisers::Representer::Show, ctx)
+      render json: represent(Advertisers::Representer::Destroy, ctx)
     end
   end
 end

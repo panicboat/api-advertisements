@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/panicboat/api-engine
-  revision: 8053f2e9dd7c6677463135adfe6ec6a45a690408
+  revision: db5bdd1810fa08a89e098c59592cceafe26c4c7a
   specs:
     panicboat (1.0.0)
       rails (~> 6.0.3, >= 6.0.3.2)

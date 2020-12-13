@@ -9,7 +9,7 @@ module Advertisers::Contract
 
     validates :agency_id,       numericality: true, allow_blank: true
     validates :name,            presence: true
-    validates :url,             presence: true
+    validates :url,             presence: true, format: { with: FORMAT_URL }
     validate  :uniqueness
 
     def uniqueness
