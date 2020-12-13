@@ -17,6 +17,9 @@ seed:
 up:
 	docker-compose up -d
 
+console:
+	docker-compose exec ${CONTAINER_NAME} rails console
+
 bash:
 	docker-compose exec ${CONTAINER_NAME} bash
 

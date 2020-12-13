@@ -321,6 +321,7 @@ DEPENDENCIES
   solargraph
   spring
   spring-watcher-listen (~> 2.0.0)
+  trailblazer-developer
   trailblazer-rails
   trailblazer-test
   tzinfo-data

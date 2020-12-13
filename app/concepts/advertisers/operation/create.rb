@@ -4,7 +4,6 @@ module Advertisers::Operation
     step Contract::Build(constant: Advertisers::Contract::Create)
     step Contract::Validate()
     fail :invalid_params!
-    step :uuid!
-    step Contract::Persist()
+    step Contract::Persist(method: :save)
   end
 end

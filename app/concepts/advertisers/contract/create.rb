@@ -13,7 +13,6 @@ module Advertisers::Contract
     validate  :uniqueness
 
     def uniqueness
-      # validates_uniqueness_of :name, scope: [:service_id]
       errors.add(:url, I18n.t('errors.messages.taken')) if ::Advertiser.where({ url: url }).present?
     end
   end
