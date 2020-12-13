@@ -4,6 +4,8 @@ module Advertisers::Operation
     step Contract::Build(constant: Advertisers::Contract::Update)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :filter!
     step Contract::Persist()
   end
 end
