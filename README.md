@@ -3,7 +3,7 @@
 
 # api-advertisements
 
-API advertisements for panicboat
+API advertisements for panicboat.
 
 # Getting Started
 
@@ -34,12 +34,6 @@ make init
 make spec
 ```
 
-## Break down into end to end tests
-
-Explain what these tests test and why.
-
-***in preparation***
-
 ## And coding style tests
 
 Explain what these tests test and why.
@@ -54,7 +48,7 @@ Add additional notes about how to deploy this on a live system.
 
 # Built With
 
-- [api-plugin](https://github.com/panicboat/api-plugin)
+- [api-engine](https://github.com/panicboat/api-engine)
 
 # Contributing
 

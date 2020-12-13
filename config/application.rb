@@ -34,5 +34,11 @@ module App
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.active_record.default_timezone = :local
+
+    config.middleware.use ActionDispatch::Flash
+
+    config.colorize_logging = false
   end
 end
