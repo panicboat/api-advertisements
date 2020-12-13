@@ -63,6 +63,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.1)
     aws-eventstream (1.1.0)
     aws-partitions (1.397.0)
@@ -90,6 +92,7 @@ GEM
       json
       simplecov
     concurrent-ruby (1.1.7)
+    crack (0.4.4)
     crass (1.0.6)
     debase (0.2.4.1)
       debase-ruby_core_source (>= 0.10.2)
@@ -113,6 +116,7 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hashdiff (1.0.1)
     hashie (4.1.0)
     hirb (0.7.3)
     i18n (1.8.5)
@@ -147,6 +151,7 @@ GEM
     parallel (1.20.0)
     parser (2.7.2.0)
       ast (~> 2.4.1)
+    public_suffix (4.0.6)
     puma (4.3.6)
       nio4r (~> 2.0)
     rack (2.2.3)
@@ -290,6 +295,10 @@ GEM
       thread_safe (~> 0.1)
     uber (0.1.0)
     unicode-display_width (1.7.0)
+    webmock (3.10.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -325,6 +334,7 @@ DEPENDENCIES
   trailblazer-rails
   trailblazer-test
   tzinfo-data
+  webmock
 
 RUBY VERSION
    ruby 2.7.2p137
