@@ -9,7 +9,6 @@ module Health::Operation
 
     def model(ctx, params:, **)
       ctx[:model] = OpenStruct.new({ status: Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok] })
-      ctx[:model].present?
     end
   end
 end
