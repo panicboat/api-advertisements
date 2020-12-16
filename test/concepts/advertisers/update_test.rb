@@ -35,7 +35,7 @@ module Advertisers
 
     test 'Update No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Update.call(params: { id: 9_999_999 })
+        Operation::Update.call(params: { id: -1 })
       end
       assert_equal JSON.parse(e.message), ['Parameters is invalid']
     end

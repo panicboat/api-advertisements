@@ -5,7 +5,7 @@ module Advertisers::Operation
     step Contract::Validate()
     fail :invalid_params!
     step :permit!
-    step :filter!
+    step :scrape!
     step Contract::Persist(method: :sync)
   end
 end
