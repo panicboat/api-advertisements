@@ -1,4 +1,4 @@
-module Agencies::Contract
+module Products::Contract
   class Destroy < Abstract::Contract
     property  :id
 

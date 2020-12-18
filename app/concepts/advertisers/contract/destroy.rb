@@ -2,6 +2,6 @@ module Advertisers::Contract
   class Destroy < Abstract::Contract
     property  :id
 
-    validates :id, numericality: true, allow_blank: false
+    validates :id, presence: true, numericality: true
   end
 end

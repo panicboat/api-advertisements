@@ -1,4 +1,4 @@
-module Advertisers::Contract
+module Products::Contract
   class Show < Abstract::Contract
     class Show < Abstract::Contract
       property  :id

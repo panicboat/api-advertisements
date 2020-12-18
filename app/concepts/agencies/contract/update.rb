@@ -7,7 +7,7 @@ module Agencies::Contract
     property  :contact
     property  :note
 
-    validates :id,              numericality: true, allow_blank: false
+    validates :id,              presence: true, numericality: true
     validates :name,            presence: true
     validates :url,             presence: true
     validate  :uniqueness

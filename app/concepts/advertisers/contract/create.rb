@@ -7,7 +7,7 @@ module Advertisers::Contract
     property  :contact
     property  :note
 
-    validates :agency_id,       numericality: true, allow_blank: true
+    validates :agency_id,       allow_blank: true, numericality: true
     validates :name,            presence: true
     validates :url,             presence: true, format: { with: FORMAT_URL }
     validate  :uniqueness
