@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Campaigns
   class DestroyTest < ActionDispatch::IntegrationTest
+    fixtures :campaigns
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -9,16 +11,14 @@ module Campaigns
         status: 200,
         headers: { "Content-Type": 'application/json' }
       )
-      advertiser = ::Advertisers::Operation::Create.call(params: { name: 'advertiser', url: 'http://advertiser.panicboat.net' }, current_user: @current_user)
-      @product = ::Products::Operation::Create.call(params: { advertiser_id: advertiser[:model].id, name: 'product', url: 'http://product.panicboat.net' }, current_user: @current_user)
     end
 
     def default_params
-      { product_id: @product[:model].id, platform: 'ios', store_url: 'http://spec.panicboat.net' }
+      { product_id: campaigns(:ios).product_id, platform: 'ios', store_url: 'http://spec.panicboat.net' }
     end
 
     def expected_attrs
-      { product_id: @product[:model].id, platform: 'ios', store_url: 'http://spec.panicboat.net' }
+      { product_id: campaigns(:ios).product_id, platform: 'ios', store_url: 'http://spec.panicboat.net' }
     end
 
     test 'Permission Deny' do
@@ -29,9 +29,15 @@ module Campaigns
     end
 
     test 'Destory Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
-      Operation::Destroy.call(params: { id: ctx[:model].id }, current_user: @current_user)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Campaigns, []
+      ctx = Operation::Destroy.call(params: { id: campaigns(:ios).id }, current_user: @current_user)
+      assert ctx.success?
+      assert_equal ::Campaign.where({ id: campaigns(:ios).id }), []
+    end
+
+    test 'Destory Data Related Product' do
+      id = campaigns(:ios).id
+      ::Product.find(campaigns(:ios).product_id).destroy
+      assert_equal ::Campaign.where({ id: id }), []
     end
 
     test 'Destroy No Data' do
