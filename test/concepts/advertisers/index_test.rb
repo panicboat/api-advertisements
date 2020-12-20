@@ -9,7 +9,7 @@ module Advertisers
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
         body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
         status: 200,
-        headers: { "Content-Type": 'application/json' }
+        headers: { 'Content-Type': 'application/json' }
       )
     end
 
