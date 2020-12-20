@@ -14,6 +14,7 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     )
+    @headers = { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
   end
 
   test 'Index' do
@@ -22,7 +23,7 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     )
-    get '/agencies', headers: { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
+    get '/agencies', headers: @headers
     assert_response :success
   end
 
@@ -32,7 +33,7 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     )
-    get "/agencies/#{agencies(:simple).id}", headers: { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
+    get "/agencies/#{agencies(:simple).id}", headers: @headers
     assert_response :success
   end
 
@@ -42,7 +43,8 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     )
-    post '/agencies', headers: { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }, params: { name: 'Spec', url: 'http://spec.panicboat.net' }
+    params = { name: 'Spec', url: 'http://spec.panicboat.net' }
+    post '/agencies', headers: @headers, params: params
     assert_response :success
   end
 
@@ -52,7 +54,8 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     )
-    patch "/agencies/#{agencies(:simple).id}", headers: { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }, params: { name: 'Spec', url: 'http://spec.panicboat.net' }
+    params = { name: 'Spec', url: 'http://spec.panicboat.net' }
+    patch "/agencies/#{agencies(:simple).id}", headers: @headers, params: params
     assert_response :success
   end
 
@@ -62,7 +65,7 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     )
-    delete "/agencies/#{agencies(:simple).id}", headers: { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
+    delete "/agencies/#{agencies(:simple).id}", headers: @headers
     assert_response :success
   end
 end
