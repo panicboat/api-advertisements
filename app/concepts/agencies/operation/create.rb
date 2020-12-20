@@ -1,6 +1,6 @@
 module Agencies::Operation
   class Create < Abstract::Operation
-    step Model(::Advertiser, :new)
+    step Model(::Agency, :new)
     step Contract::Build(constant: Agencies::Contract::Create)
     step Contract::Validate()
     fail :invalid_params!

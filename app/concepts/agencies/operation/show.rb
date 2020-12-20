@@ -1,6 +1,6 @@
 module Agencies::Operation
   class Show < Abstract::Operation
-    step Model(::Advertiser, :find_by)
+    step Model(::Agency, :find_by)
     step Contract::Build(constant: Agencies::Contract::Show)
     step Contract::Validate()
     fail :invalid_params!

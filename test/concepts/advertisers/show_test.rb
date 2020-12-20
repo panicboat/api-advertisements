@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Advertisers
   class ShowTest < ActionDispatch::IntegrationTest
+    fixtures :advertisers
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -20,9 +22,8 @@ module Advertisers
     end
 
     test 'Show Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
-      result = Operation::Show.call(params: { id: ctx[:model].id }, current_user: @current_user)
-      assert_equal result[:model].name, 'Spec'
+      ctx = Operation::Show.call(params: { id: advertisers(:simple).id }, current_user: @current_user)
+      assert_equal ctx[:model].name, advertisers(:simple).name
     end
 
     test 'Show No Data' do

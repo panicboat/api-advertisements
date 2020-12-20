@@ -4,8 +4,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+simple:
+  id: 1
+  name: SimpleAgency
+  url: https://agency.panicboat.net
+  representative: simple
+  contact: 03-0000-0000

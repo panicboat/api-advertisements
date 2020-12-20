@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Advertisers
   class UpdateTest < ActionDispatch::IntegrationTest
+    fixtures :advertisers
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -20,17 +22,16 @@ module Advertisers
     end
 
     test 'Permission Deny : No Session' do
-      result = Operation::Create.call(params: default_params, current_user: @current_user)
       e = assert_raises InvalidPermissions do
-        Operation::Update.call(params: { id: result[:model].id, name: 'This is name.' })
+        Operation::Update.call(params: { id: advertisers(:simple).id, name: 'This is name.' })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Update Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
-      result = Operation::Update.call(params: { id: ctx[:model].id, name: 'This is name.' }, current_user: @current_user)
-      assert_equal result[:model].name, 'This is name.'
+      ctx = Operation::Update.call(params: { id: advertisers(:simple).id, name: 'This is name.' }, current_user: @current_user)
+      assert ctx.success?
+      assert_equal ctx[:model].name, 'This is name.'
     end
 
     test 'Update No Data' do

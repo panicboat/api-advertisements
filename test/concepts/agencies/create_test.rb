@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Agencies
   class CreateTest < ActionDispatch::IntegrationTest
+    fixtures :agencies
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -27,8 +29,9 @@ module Agencies
     end
 
     test 'Create Data' do
-      result = Operation::Create.call(params: default_params, current_user: @current_user)
-      assert_equal result[:model].name, 'Spec'
+      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
+      assert ctx.success?
+      assert_equal ctx[:model].name, 'Spec'
     end
 
     test 'Create Duplicate Url' do

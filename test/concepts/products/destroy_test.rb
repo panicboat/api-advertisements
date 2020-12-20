@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Products
   class DestroyTest < ActionDispatch::IntegrationTest
+    fixtures :products
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -9,15 +11,14 @@ module Products
         status: 200,
         headers: { "Content-Type": 'application/json' }
       )
-      @advertiser = ::Advertisers::Operation::Create.call(params: { name: 'advertiser', url: 'http://advertiser.panicboat.net' }, current_user: @current_user)
     end
 
     def default_params
-      { advertiser_id: @advertiser[:model].id, name: 'Spec', url: 'http://spec.panicboat.net' }
+      { advertiser_id: products(:simple).advertiser_id, name: 'Spec', url: 'http://spec.panicboat.net' }
     end
 
     def expected_attrs
-      { advertiser_id: @advertiser[:model].id, name: 'Spec', url: 'http://spec.panicboat.net' }
+      { advertiser_id: products(:simple).advertiser_id, name: 'Spec', url: 'http://spec.panicboat.net' }
     end
 
     test 'Permission Deny' do
@@ -28,9 +29,15 @@ module Products
     end
 
     test 'Destory Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
-      Operation::Destroy.call(params: { id: ctx[:model].id }, current_user: @current_user)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Products, []
+      ctx = Operation::Destroy.call(params: { id: products(:simple).id }, current_user: @current_user)
+      assert ctx.success?
+      assert_equal ::Product.where({ id: products(:simple).id }), []
+    end
+
+    test 'Destory Data Related Advertiser' do
+      id = products(:simple).id
+      ::Advertiser.find(products(:simple).advertiser_id).destroy
+      assert_equal ::Product.where({ id: id }), []
     end
 
     test 'Destroy No Data' do

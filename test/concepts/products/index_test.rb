@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Products
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :products
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -9,28 +11,33 @@ module Products
         status: 200,
         headers: { "Content-Type": 'application/json' }
       )
-      @advertiser = ::Advertisers::Operation::Create.call(params: { name: 'advertiser', url: 'http://advertiser.panicboat.net' }, current_user: @current_user)
     end
 
     def default_params
-      { advertiser_id: @advertiser[:model].id, name: 'Spec', url: 'http://spec.panicboat.net' }
+      { advertiser_id: products(:simple).advertiser_id, name: 'Spec', url: 'http://spec.panicboat.net' }
     end
 
     def expected_attrs
-      { advertiser_id: @advertiser[:model].id, name: 'Spec', url: 'http://spec.panicboat.net' }
+      { advertiser_id: products(:simple).advertiser_id, name: 'Spec', url: 'http://spec.panicboat.net' }
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: { advertiser_id: @advertiser[:model].id, name: 'Spec1', url: 'http://spec1.panicboat.net' }, current_user: @current_user)
-      Operation::Create.call(params: { advertiser_id: @advertiser[:model].id, name: 'Spec2', url: 'http://spec2.panicboat.net' }, current_user: @current_user)
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
-      assert_equal ctx[:model].Products.length, 2
-      ctx[:model].Products.each do |advertiser|
-        assert_equal %w[Spec1 Spec2].include?(advertiser.name), true
+      assert ctx[:model].Products.present?
+      assert_equal ctx[:model].Products.length, ::Product.all.count
+    end
+
+    test 'Index Data Related Advertiser' do
+      ctx = Operation::Index.call(params: { advertiser_id: products(:simple).advertiser_id }, current_user: @current_user)
+      assert ctx[:model].Products.present?
+      ctx[:model].Products.each do |product|
+        products = ::Product.where({ advertiser_id: products(:simple).advertiser_id })
+        assert_equal products.pluck(:name).include?(product.name), true
       end
     end
 
     test 'Index No Data' do
+      ::Product.all.each(&:destroy)
       assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Products, []
     end
   end

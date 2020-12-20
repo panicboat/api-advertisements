@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Agencies
   class DestroyTest < ActionDispatch::IntegrationTest
+    fixtures :agencies
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -21,15 +23,15 @@ module Agencies
 
     test 'Permission Deny' do
       e = assert_raises InvalidPermissions do
-        Operation::Create.call(params: default_params)
+        Operation::Destroy.call(params: { id: agencies(:simple).id })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Destory Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
-      Operation::Destroy.call(params: { id: ctx[:model].id }, current_user: @current_user)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Agencies, []
+      ctx = Operation::Destroy.call(params: { id: agencies(:simple).id }, current_user: @current_user)
+      assert ctx.success?
+      assert_equal ::Agency.where({ id: agencies(:simple).id }), []
     end
 
     test 'Destroy No Data' do

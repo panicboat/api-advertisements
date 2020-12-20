@@ -1,6 +1,6 @@
 module Agencies::Operation
   class Index < Abstract::Operation
-    step Model(::Advertiser)
+    step Model(::Agency)
     step Contract::Build(constant: Agencies::Contract::Index)
     step Contract::Validate()
     fail :invalid_params!

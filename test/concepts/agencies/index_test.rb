@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Agencies
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :agencies
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -20,16 +22,13 @@ module Agencies
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: { name: 'Spec1', url: 'http://spec1.panicboat.net' }, current_user: @current_user)
-      Operation::Create.call(params: { name: 'Spec2', url: 'http://spec2.panicboat.net' }, current_user: @current_user)
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
-      assert_equal ctx[:model].Agencies.length, 2
-      ctx[:model].Agencies.each do |advertiser|
-        assert_equal %w[Spec1 Spec2].include?(advertiser.name), true
-      end
+      assert ctx[:model].Agencies.present?
+      assert_equal ctx[:model].Agencies.length, ::Agency.all.count
     end
 
     test 'Index No Data' do
+      ::Agency.all.each(&:destroy)
       assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Agencies, []
     end
   end

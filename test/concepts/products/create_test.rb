@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Products
   class CreateTest < ActionDispatch::IntegrationTest
+    fixtures :products
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -9,15 +11,14 @@ module Products
         status: 200,
         headers: { "Content-Type": 'application/json' }
       )
-      @advertiser = ::Advertisers::Operation::Create.call(params: { name: 'advertiser', url: 'http://advertiser.panicboat.net' }, current_user: @current_user)
     end
 
     def default_params
-      { advertiser_id: @advertiser[:model].id, name: 'Spec', url: 'http://spec.panicboat.net' }
+      { advertiser_id: products(:simple).advertiser_id, name: 'Spec', url: 'http://spec.panicboat.net' }
     end
 
     def expected_attrs
-      { advertiser_id: @advertiser[:model].id, name: 'Spec', url: 'http://spec.panicboat.net' }
+      { advertiser_id: products(:simple).advertiser_id, name: 'Spec', url: 'http://spec.panicboat.net' }
     end
 
     test 'Permission Deny' do
@@ -28,8 +29,9 @@ module Products
     end
 
     test 'Create Data' do
-      result = Operation::Create.call(params: default_params, current_user: @current_user)
-      assert_equal result[:model].name, 'Spec'
+      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
+      assert ctx.success?
+      assert_equal ctx[:model].name, 'Spec'
     end
 
     test 'Create Duplicate Url' do

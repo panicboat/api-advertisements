@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Advertisers
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :advertisers
+
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
       WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/").to_return(
@@ -20,16 +22,22 @@ module Advertisers
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: { name: 'Spec1', url: 'http://spec1.panicboat.net' }, current_user: @current_user)
-      Operation::Create.call(params: { name: 'Spec2', url: 'http://spec2.panicboat.net' }, current_user: @current_user)
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
-      assert_equal ctx[:model].Advertisers.length, 2
+      assert ctx[:model].Advertisers.present?
+      assert_equal ctx[:model].Advertisers.length, ::Advertiser.all.count
+    end
+
+    test 'Index Data Related Agency' do
+      ctx = Operation::Index.call(params: { agency_id: advertisers(:advertiser_related_agency).agency_id }, current_user: @current_user)
+      assert ctx[:model].Advertisers.present?
       ctx[:model].Advertisers.each do |advertiser|
-        assert_equal %w[Spec1 Spec2].include?(advertiser.name), true
+        advertisers = ::Advertiser.where({ agency_id: advertisers(:advertiser_related_agency).agency_id })
+        assert_equal advertisers.pluck(:name).include?(advertiser.name), true
       end
     end
 
     test 'Index No Data' do
+      ::Advertiser.all.each(&:destroy)
       assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Advertisers, []
     end
   end
