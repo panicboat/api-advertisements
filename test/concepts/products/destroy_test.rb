@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Products
   class DestroyTest < ActionDispatch::IntegrationTest
-    fixtures :advertisers, :products
+    fixtures :products
 
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)

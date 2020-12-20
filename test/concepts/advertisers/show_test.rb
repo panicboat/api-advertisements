@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Advertisers
   class ShowTest < ActionDispatch::IntegrationTest
-    fixtures :agencies, :advertisers
+    fixtures :advertisers
 
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
