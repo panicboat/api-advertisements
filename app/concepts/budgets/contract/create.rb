@@ -12,26 +12,10 @@ module Budgets::Contract
     validates :end_at,      presence: true
     validates :amount,      presence: true, numericality: true
     validates :status,      presence: false, inclusion: { in: ::Budget.statuses.keys }
-    validate  :datetime
     validate  :uniqueness
 
-    def datetime
-      return if start_at.blank? || end_at.blank?
-
-      begin
-        DateTime.parse(start_at.to_s)
-      rescue ArgumentError
-        errors.add(:start_at, 'must be a valid datetime')
-      end
-      begin
-        DateTime.parse(end_at.to_s)
-      rescue ArgumentError
-        errors.add(:end_at, 'must be a valid datetime')
-      end
-    end
-
     def uniqueness
-      errors.add(:period, 'are overlapping') if ::Budget.where({ product_id: product_id }).where('start_at <= ?', end_at).where('? <= end_at', start_at).present?
+      errors.add(:period, 'is overlapping') if ::Budget.where({ product_id: product_id }).where('start_at <= ?', end_at).where('? <= end_at', start_at).present?
     end
   end
 end
