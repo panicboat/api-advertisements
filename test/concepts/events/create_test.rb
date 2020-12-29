@@ -35,7 +35,7 @@ module Events
       assert_equal ctx[:model].name, 'spec'
     end
 
-    test 'Create Duplicate Store Url' do
+    test 'Create Duplicate Name' do
       Operation::Create.call(params: default_params, current_user: @current_user)
       e = assert_raises InvalidParameters do
         Operation::Create.call(params: default_params, current_user: @current_user)
