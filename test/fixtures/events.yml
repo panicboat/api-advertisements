@@ -4,3 +4,14 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+install:
+  id: 1
+  campaign_id: 1
+  name: install
+  status: available
+
+payment:
+  id: 2
+  campaign_id: 1
+  name: payment
+  status: available

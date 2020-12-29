@@ -27,7 +27,7 @@ module Campaigns
       assert_equal ctx[:model].Campaigns.length, ::Campaign.all.count
     end
 
-    test 'Index Data Related Agency' do
+    test 'Index Data Related Product' do
       ctx = Operation::Index.call(params: { product_id: campaigns(:ios).product_id }, current_user: @current_user)
       assert ctx[:model].Campaigns.present?
       ctx[:model].Campaigns.each do |campaign|
