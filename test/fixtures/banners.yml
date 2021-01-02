@@ -4,3 +4,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+banner:
+  id: 1
+  product_id: 1
+  label: banner
+  classification: image
+  status: available

@@ -34,7 +34,7 @@ module Budgets
       assert_equal ctx[:model].amount, 200_000
     end
 
-    test 'Create Data' do
+    test 'Update Data More Than Once' do
       ctx1 = Operation::Update.call(params: default_params.merge({ id: budgets(:budget3).id, start_at: '2019-07-01 00:00:00', end_at: '2019-08-04 23:59:59' }), current_user: @current_user)
       ctx2 = Operation::Update.call(params: default_params.merge({ id: budgets(:budget3).id, start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
       [ctx1, ctx2].each do |ctx|

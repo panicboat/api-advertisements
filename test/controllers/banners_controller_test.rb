@@ -16,4 +16,31 @@ class BannersControllerTest < ActionDispatch::IntegrationTest
     )
     @headers = { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
   end
+
+  test 'Index' do
+    get '/banners', headers: @headers
+    assert_response :success
+  end
+
+  test 'Show' do
+    get "/banners/#{banners(:banner).id}", headers: @headers
+    assert_response :success
+  end
+
+  test 'Create' do
+    params = { product_id: banners(:banner).product_id, classification: 'image' }
+    post '/banners', headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Update' do
+    params = { product_id: banners(:banner).product_id, classification: 'movie' }
+    patch "/banners/#{banners(:banner).id}", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Destroy' do
+    delete "/banners/#{banners(:banner).id}", headers: @headers
+    assert_response :success
+  end
 end
