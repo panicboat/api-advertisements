@@ -16,4 +16,31 @@ class MeasurementsControllerTest < ActionDispatch::IntegrationTest
     )
     @headers = { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
   end
+
+  test 'Index' do
+    get '/measurements', headers: @headers
+    assert_response :success
+  end
+
+  test 'Show' do
+    get "/measurements/#{measurements(:measurement).id}", headers: @headers
+    assert_response :success
+  end
+
+  test 'Create' do
+    params = { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+    post '/measurements', headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Update' do
+    params = { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+    patch "/measurements/#{measurements(:measurement).id}", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Destroy' do
+    delete "/measurements/#{measurements(:measurement).id}", headers: @headers
+    assert_response :success
+  end
 end

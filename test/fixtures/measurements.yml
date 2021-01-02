@@ -4,3 +4,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+measurement:
+  id: 1
+  campaign_id: 1
+  label: measurement
+  classification: default
+  status: available
