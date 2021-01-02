@@ -61,7 +61,7 @@ module AchievementDetails
         assert_equal JSON.parse(e.message), ['Period has already been taken']
       end
       [e6].each do |e|
-        assert_equal JSON.parse(e.message), ['Start At has already been taken']
+        assert_equal JSON.parse(e.message), ['Start at has already been taken']
       end
     end
   end
