@@ -1,8 +1,8 @@
 require 'test_helper'
 
-module Banners
+module AchievementDetails
   class DestroyTest < ActionDispatch::IntegrationTest
-    fixtures :banners
+    fixtures :achievement_details
 
     setup do
       @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
@@ -14,30 +14,30 @@ module Banners
     end
 
     def default_params
-      { product_id: banners(:banner).product_id, classification: 'image', label: 'Spec' }
+      { achievement_id: achievement_details(:detail).achievement_id, charge: 1_000, payment: 700, commission: 300 }
     end
 
     def expected_attrs
-      { product_id: banners(:banner).product_id, classification: 'image', label: 'Spec' }
+      { achievement_id: achievement_details(:detail).achievement_id, charge: 1_000, payment: 700, commission: 300 }
     end
 
     test 'Permission Deny' do
       e = assert_raises InvalidPermissions do
-        Operation::Destroy.call(params: { id: banners(:banner).id })
+        Operation::Destroy.call(params: { id: achievement_details(:detail).id })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { id: banners(:banner).id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { id: achievement_details(:detail).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::Banner.where({ id: banners(:banner).id }), []
+      assert_equal ::AchievementDetail.where({ id: achievement_details(:detail).id }), []
     end
 
-    test 'Destory Data Related Product' do
-      id = banners(:banner).id
-      ::Product.find(banners(:banner).product_id).destroy
-      assert_equal ::Banner.where({ id: id }), []
+    test 'Destory Data Related Achievement' do
+      id = achievement_details(:detail).id
+      ::Achievement.find(achievement_details(:detail).achievement_id).destroy
+      assert_equal ::AchievementDetail.where({ id: id }), []
     end
 
     test 'Destroy No Data' do

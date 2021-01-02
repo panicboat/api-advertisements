@@ -4,3 +4,36 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+detail:
+  id: 1
+  achievement_id: 1
+  start_at: 2019-08-05 00:00:00
+  end_at: 2019-09-15 23:59:59
+  charge: 1_000
+  payment: 700
+  commission: 300
+
+detail1:
+  id: 2
+  achievement_id: 2
+  start_at: 2019-08-05 00:00:00
+  end_at: 2019-09-15 23:59:59
+  charge: 1_000
+  payment: 700
+  commission: 300
+
+detail2:
+  id: 3
+  achievement_id: 2
+  start_at: 2020-08-05 00:00:00
+  end_at: 2020-09-15 23:59:59
+  charge: 1_000
+  payment: 700
+  commission: 300
+
+detail3:
+  id: 4
+  achievement_id: 2
+  charge: 1_000
+  payment: 700
+  commission: 300

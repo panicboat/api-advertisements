@@ -1,4 +1,5 @@
 class Achievement < ApplicationRecord
+  has_many :achievement_details,    dependent:  :destroy
   has_many :map_event_achievements, dependent:  :destroy
   has_many :events,                 through:    :map_event_achievements
 

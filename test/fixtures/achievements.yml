@@ -8,3 +8,8 @@ achievement:
   id: 1
   label: achievement
   status: available
+
+achievement1:
+  id: 2
+  label: achievement1
+  status: available

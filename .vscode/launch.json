@@ -17,7 +17,7 @@
             "program": "bin/rake",
             "args": ["test"],
             "env": {
-                "TEST": ""
+                "TEST": "/app/test/controllers/achievement_details_controller_test.rb"
             },
         },
     ]

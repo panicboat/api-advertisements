@@ -16,4 +16,31 @@ class AchievementDetailsControllerTest < ActionDispatch::IntegrationTest
     )
     @headers = { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
   end
+
+  test 'Index' do
+    get "/achievements/#{achievement_details(:detail).achievement_id}/details", headers: @headers
+    assert_response :success
+  end
+
+  test 'Show' do
+    get "/achievements/#{achievement_details(:detail).achievement_id}/details/#{achievement_details(:detail).id}", headers: @headers
+    assert_response :success
+  end
+
+  test 'Create' do
+    params = { achievement_id: achievement_details(:detail).achievement_id, charge: 1_000.5, payment: 700.3, commission: 300.2 }
+    post "/achievements/#{achievement_details(:detail).achievement_id}/details", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Update' do
+    params = { achievement_id: achievement_details(:detail).achievement_id, charge: 1_000.5, payment: 700.3, commission: 300.2 }
+    patch "/achievements/#{achievement_details(:detail).achievement_id}/details/#{achievement_details(:detail).id}", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Destroy' do
+    delete "/achievements/#{achievement_details(:detail).achievement_id}/details/#{achievement_details(:detail).id}", headers: @headers
+    assert_response :success
+  end
 end

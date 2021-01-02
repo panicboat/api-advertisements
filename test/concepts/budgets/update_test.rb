@@ -60,7 +60,7 @@ module Budgets
         Operation::Update.call(params: default_params.merge({ id: budgets(:budget3).id, start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }), current_user: @current_user)
       end
       [e1, e2, e3, e4, e5].each do |e|
-        assert_equal JSON.parse(e.message), ['Period is overlapping']
+        assert_equal JSON.parse(e.message), ['Period has already been taken']
       end
     end
 

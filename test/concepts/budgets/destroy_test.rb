@@ -23,7 +23,7 @@ module Budgets
 
     test 'Permission Deny' do
       e = assert_raises InvalidPermissions do
-        Operation::Create.call(params: default_params)
+        Operation::Destroy.call(params: { id: budgets(:budget1).id })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
