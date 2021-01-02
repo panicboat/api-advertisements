@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 2020_11_07_000000) do
 
   create_table "achievements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "単価", force: :cascade do |t|
     t.string "label", comment: "ラベル"
-    t.integer "classification", limit: 3, null: false, comment: "単価種別"
     t.integer "status", limit: 3, null: false, comment: "ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -126,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_000000) do
   create_table "map_event_achievements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "イベント成果報酬", force: :cascade do |t|
     t.bigint "event_id", null: false, comment: "イベントID"
     t.bigint "achievement_id", null: false, comment: "成果報酬ID"
+    t.integer "classification", limit: 3, null: false, comment: "単価種別"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["achievement_id"], name: "index_map_event_achievements_on_achievement_id"

@@ -16,4 +16,31 @@ class AchievementsControllerTest < ActionDispatch::IntegrationTest
     )
     @headers = { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
   end
+
+  test 'Index' do
+    get '/achievements', headers: @headers
+    assert_response :success
+  end
+
+  test 'Show' do
+    get "/achievements/#{achievements(:achievement).id}", headers: @headers
+    assert_response :success
+  end
+
+  test 'Create' do
+    params = { label: 'label' }
+    post '/achievements', headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Update' do
+    params = { label: 'label' }
+    patch "/achievements/#{achievements(:achievement).id}", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Destroy' do
+    delete "/achievements/#{achievements(:achievement).id}", headers: @headers
+    assert_response :success
+  end
 end
