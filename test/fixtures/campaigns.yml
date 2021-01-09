@@ -17,3 +17,10 @@ android:
   platform: android
   store_url: https://play.google.com/store/apps/details?id=com.google.android.youtube
   status: available
+
+other:
+  id: 3
+  product_id: 1
+  platform: ios
+  store_url: https://store.panicboat.net
+  status: available

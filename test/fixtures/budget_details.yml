@@ -4,3 +4,14 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+detail:
+  id: 1
+  budget_id: 1
+  campaign_id: 1
+  amount: 500_000
+
+detail1:
+  id: 2
+  budget_id: 1
+  campaign_id: 2
+  amount: 400_000

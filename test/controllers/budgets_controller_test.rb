@@ -39,7 +39,7 @@ class BudgetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Update' do
-    params = { product_id: budgets(:budget1).product_id, start_at: '2019-08-05 00:00:00', end_at: '2019-09-15 23:59:59', amount: 100_000 }
+    params = { product_id: budgets(:budget1).product_id, start_at: '2019-08-05 00:00:00', end_at: '2019-09-15 23:59:59', amount: 2_000_000 }
     patch "/budgets/#{budgets(:budget1).id}", headers: @headers, params: params
     assert_response :success
   end
