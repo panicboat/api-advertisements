@@ -24,7 +24,7 @@ module AchievementDetails
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].AchievementDetails.present?
-      assert_equal ctx[:model].AchievementDetails.length, ::AchievementDetail.all.count
+      assert_equal ::AchievementDetail.all.count, ctx[:model].AchievementDetails.length
     end
 
     test 'Index Data Related Achievement' do
@@ -32,13 +32,13 @@ module AchievementDetails
       assert ctx[:model].AchievementDetails.present?
       ctx[:model].AchievementDetails.each do |detail|
         details = ::AchievementDetail.where({ achievement_id: achievement_details(:detail).achievement_id })
-        assert_equal details.pluck(:charge).include?(detail.charge), true
+        assert_equal true, details.pluck(:charge).include?(detail.charge)
       end
     end
 
     test 'Index No Data' do
       ::AchievementDetail.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].AchievementDetails, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].AchievementDetails
     end
   end
 end

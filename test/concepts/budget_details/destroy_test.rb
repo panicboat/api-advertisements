@@ -31,19 +31,19 @@ module BudgetDetails
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: budget_details(:detail).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::BudgetDetail.where({ id: budget_details(:detail).id }), []
+      assert_equal [], ::BudgetDetail.where({ id: budget_details(:detail).id })
     end
 
     test 'Destory Data Related Budget' do
       id = budget_details(:detail).id
       ::Budget.find(budget_details(:detail).budget_id).destroy
-      assert_equal ::BudgetDetail.where({ id: id }), []
+      assert_equal [], ::BudgetDetail.where({ id: id })
     end
 
     test 'Destory Data Related Campaign' do
       id = budget_details(:detail).id
       ::Campaign.find(budget_details(:detail).campaign_id).destroy
-      assert_equal ::BudgetDetail.where({ id: id }), []
+      assert_equal [], ::BudgetDetail.where({ id: id })
     end
 
     test 'Destroy No Data' do

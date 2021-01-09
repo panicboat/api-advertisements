@@ -31,7 +31,7 @@ module Products
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].name, 'Spec'
+      assert_equal 'Spec', ctx[:model].name
     end
 
     test 'Create Duplicate Url' do

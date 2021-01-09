@@ -23,7 +23,7 @@ module Budgets
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: budgets(:budget1).id }, current_user: @current_user)
-      assert_equal ctx[:model].end_at, budgets(:budget1).end_at
+      assert_equal budgets(:budget1).end_at, ctx[:model].end_at
     end
 
     test 'Show No Data' do

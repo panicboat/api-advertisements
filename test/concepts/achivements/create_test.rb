@@ -31,7 +31,7 @@ module Achievements
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].label, 'Spec'
+      assert_equal 'Spec', ctx[:model].label
     end
   end
 end

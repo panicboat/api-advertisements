@@ -23,7 +23,7 @@ module Achievements
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: achievements(:achievement).id }, current_user: @current_user)
-      assert_equal ctx[:model].label, achievements(:achievement).label
+      assert_equal achievements(:achievement).label, ctx[:model].label
     end
 
     test 'Show No Data' do

@@ -31,7 +31,7 @@ module MeasurementDetails
     test 'Update Data' do
       ctx = Operation::Update.call(params: { id: measurement_details(:detail).id, url: 'https://measurement.panicboat.net/update.png' }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].url, 'https://measurement.panicboat.net/update.png'
+      assert_equal 'https://measurement.panicboat.net/update.png', ctx[:model].url
     end
 
     test 'Update Data More Than Once' do
@@ -39,7 +39,7 @@ module MeasurementDetails
       ctx2 = Operation::Update.call(params: default_params.merge({ id: measurement_details(:detail2).id, start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
       [ctx1, ctx2].each do |ctx|
         assert ctx.success?
-        assert_equal ctx[:model].url, 'https://measurement.panicboat.net/image.png'
+        assert_equal 'https://measurement.panicboat.net/image.png', ctx[:model].url
       end
     end
 
@@ -60,7 +60,7 @@ module MeasurementDetails
         Operation::Update.call(params: default_params.merge({ id: measurement_details(:detail2).id, start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }), current_user: @current_user)
       end
       [e1, e2, e3, e4, e5].each do |e|
-        assert_equal JSON.parse(e.message), ['Period has already been taken']
+        assert_equal ['Period has already been taken'], JSON.parse(e.message)
       end
     end
 
@@ -68,7 +68,7 @@ module MeasurementDetails
       e = assert_raises InvalidParameters do
         Operation::Update.call(params: { id: -1 })
       end
-      assert_equal JSON.parse(e.message), ['Parameters is invalid']
+      assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end
   end
 end

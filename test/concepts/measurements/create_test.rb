@@ -31,8 +31,8 @@ module Measurements
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].campaign_id, measurements(:measurement).campaign_id
-      assert_equal ctx[:model].classification, 'designated'
+      assert_equal measurements(:measurement).campaign_id, ctx[:model].campaign_id
+      assert_equal 'designated', ctx[:model].classification
     end
 
     test 'Create Duplicate Classification' do

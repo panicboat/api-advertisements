@@ -31,14 +31,14 @@ module Events
     test 'Update Data' do
       ctx = Operation::Update.call(params: { id: events(:install).id, name: 'spec name' }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].name, 'spec name'
+      assert_equal 'spec name', ctx[:model].name
     end
 
     test 'Update No Data' do
       e = assert_raises InvalidParameters do
         Operation::Update.call(params: { id: -1 })
       end
-      assert_equal JSON.parse(e.message), ['Parameters is invalid']
+      assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end
   end
 end

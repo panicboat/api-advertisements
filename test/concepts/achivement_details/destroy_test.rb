@@ -31,13 +31,13 @@ module AchievementDetails
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: achievement_details(:detail).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::AchievementDetail.where({ id: achievement_details(:detail).id }), []
+      assert_equal [], ::AchievementDetail.where({ id: achievement_details(:detail).id })
     end
 
     test 'Destory Data Related Achievement' do
       id = achievement_details(:detail).id
       ::Achievement.find(achievement_details(:detail).achievement_id).destroy
-      assert_equal ::AchievementDetail.where({ id: id }), []
+      assert_equal [], ::AchievementDetail.where({ id: id })
     end
 
     test 'Destroy No Data' do

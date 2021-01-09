@@ -31,7 +31,7 @@ module AchievementDetails
     test 'Update Data' do
       ctx = Operation::Update.call(params: { id: achievement_details(:detail).id, charge: 2_000, payment: 1400, commission: 600 }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].charge, 2_000
+      assert_equal 2_000, ctx[:model].charge
     end
 
     test 'Update Data More Than Once' do
@@ -39,7 +39,7 @@ module AchievementDetails
       ctx2 = Operation::Update.call(params: default_params.merge({ id: achievement_details(:detail2).id, start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
       [ctx1, ctx2].each do |ctx|
         assert ctx.success?
-        assert_equal ctx[:model].charge, 1_000
+        assert_equal 1_000, ctx[:model].charge
       end
     end
 
@@ -60,7 +60,7 @@ module AchievementDetails
         Operation::Update.call(params: default_params.merge({ id: achievement_details(:detail2).id, start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }), current_user: @current_user)
       end
       [e1, e2, e3, e4, e5].each do |e|
-        assert_equal JSON.parse(e.message), ['Period has already been taken']
+        assert_equal ['Period has already been taken'], JSON.parse(e.message)
       end
     end
 
@@ -68,7 +68,7 @@ module AchievementDetails
       e = assert_raises InvalidParameters do
         Operation::Update.call(params: { id: -1 })
       end
-      assert_equal JSON.parse(e.message), ['Parameters is invalid']
+      assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end
   end
 end

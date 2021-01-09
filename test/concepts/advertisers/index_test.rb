@@ -24,7 +24,7 @@ module Advertisers
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].Advertisers.present?
-      assert_equal ctx[:model].Advertisers.length, ::Advertiser.all.count
+      assert_equal ::Advertiser.all.count, ctx[:model].Advertisers.length
     end
 
     test 'Index Data Related Agency' do
@@ -32,13 +32,13 @@ module Advertisers
       assert ctx[:model].Advertisers.present?
       ctx[:model].Advertisers.each do |advertiser|
         advertisers = ::Advertiser.where({ agency_id: advertisers(:advertiser_related_agency).agency_id })
-        assert_equal advertisers.pluck(:name).include?(advertiser.name), true
+        assert_equal true, advertisers.pluck(:name).include?(advertiser.name)
       end
     end
 
     test 'Index No Data' do
       ::Advertiser.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Advertisers, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Advertisers
     end
   end
 end

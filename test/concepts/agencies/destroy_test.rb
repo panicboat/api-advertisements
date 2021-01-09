@@ -31,7 +31,7 @@ module Agencies
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: agencies(:simple).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::Agency.where({ id: agencies(:simple).id }), []
+      assert_equal [], ::Agency.where({ id: agencies(:simple).id })
     end
 
     test 'Destroy No Data' do

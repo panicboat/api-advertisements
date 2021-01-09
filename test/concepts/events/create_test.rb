@@ -31,8 +31,8 @@ module Events
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].campaign_id, events(:install).campaign_id
-      assert_equal ctx[:model].name, 'spec'
+      assert_equal events(:install).campaign_id, ctx[:model].campaign_id
+      assert_equal 'spec', ctx[:model].name
     end
 
     test 'Create Duplicate Name' do

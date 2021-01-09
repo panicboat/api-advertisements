@@ -31,13 +31,13 @@ module Advertisers
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: advertisers(:simple).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::Advertiser.where({ id: advertisers(:simple).id }), []
+      assert_equal [], ::Advertiser.where({ id: advertisers(:simple).id })
     end
 
     test 'Destory Data Related Agency' do
       id = advertisers(:advertiser_related_agency).id
       ::Agency.find(advertisers(:advertiser_related_agency).agency_id).destroy
-      assert_equal ::Advertiser.where({ id: id }), []
+      assert_equal [], ::Advertiser.where({ id: id })
     end
 
     test 'Destroy No Data' do

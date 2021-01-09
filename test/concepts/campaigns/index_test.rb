@@ -24,7 +24,7 @@ module Campaigns
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].Campaigns.present?
-      assert_equal ctx[:model].Campaigns.length, ::Campaign.all.count
+      assert_equal ::Campaign.all.count, ctx[:model].Campaigns.length
     end
 
     test 'Index Data Related Product' do
@@ -32,13 +32,13 @@ module Campaigns
       assert ctx[:model].Campaigns.present?
       ctx[:model].Campaigns.each do |campaign|
         campaigns = ::Campaign.where({ product_id: campaigns(:ios).product_id })
-        assert_equal campaigns.pluck(:store_url).include?(campaign.store_url), true
+        assert_equal true, campaigns.pluck(:store_url).include?(campaign.store_url)
       end
     end
 
     test 'Index No Data' do
       ::Campaign.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Campaigns, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Campaigns
     end
   end
 end

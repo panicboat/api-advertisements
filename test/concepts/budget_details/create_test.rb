@@ -31,9 +31,9 @@ module BudgetDetails
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].budget_id, budget_details(:detail).budget_id
-      assert_equal ctx[:model].campaign_id, campaigns(:other).id
-      assert_equal ctx[:model].amount, 50_000
+      assert_equal budget_details(:detail).budget_id, ctx[:model].budget_id
+      assert_equal campaigns(:other).id, ctx[:model].campaign_id
+      assert_equal 50_000, ctx[:model].amount
     end
 
     test 'Create Duplicate Data' do

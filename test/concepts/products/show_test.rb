@@ -23,7 +23,7 @@ module Products
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: products(:simple).id }, current_user: @current_user)
-      assert_equal ctx[:model].name, products(:simple).name
+      assert_equal products(:simple).name, ctx[:model].name
     end
 
     test 'Show No Data' do

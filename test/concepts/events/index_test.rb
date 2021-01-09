@@ -24,7 +24,7 @@ module Events
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].Events.present?
-      assert_equal ctx[:model].Events.length, ::Event.all.count
+      assert_equal ::Event.all.count, ctx[:model].Events.length
     end
 
     test 'Index Data Related Campaign' do
@@ -32,13 +32,13 @@ module Events
       assert ctx[:model].Events.present?
       ctx[:model].Events.each do |event|
         events = ::Event.where({ campaign_id: events(:install).campaign_id })
-        assert_equal events.pluck(:name).include?(event.name), true
+        assert_equal true, events.pluck(:name).include?(event.name)
       end
     end
 
     test 'Index No Data' do
       ::Event.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Events, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Events
     end
   end
 end

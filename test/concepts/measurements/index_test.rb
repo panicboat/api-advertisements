@@ -24,7 +24,7 @@ module Measurements
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].Measurements.present?
-      assert_equal ctx[:model].Measurements.length, ::Measurement.all.count
+      assert_equal ::Measurement.all.count, ctx[:model].Measurements.length
     end
 
     test 'Index Data Related Campaign' do
@@ -32,13 +32,13 @@ module Measurements
       assert ctx[:model].Measurements.present?
       ctx[:model].Measurements.each do |measurement|
         measurements = ::Measurement.where({ campaign_id: measurements(:measurement).campaign_id })
-        assert_equal measurements.pluck(:label).include?(measurement.label), true
+        assert_equal true, measurements.pluck(:label).include?(measurement.label)
       end
     end
 
     test 'Index No Data' do
       ::Measurement.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Measurements, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Measurements
     end
   end
 end

@@ -23,7 +23,7 @@ module Events
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: events(:install).id }, current_user: @current_user)
-      assert_equal ctx[:model].name, events(:install).name
+      assert_equal events(:install).name, ctx[:model].name
     end
 
     test 'Show No Data' do

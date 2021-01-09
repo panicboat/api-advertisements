@@ -23,7 +23,7 @@ module Advertisers
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: advertisers(:simple).id }, current_user: @current_user)
-      assert_equal ctx[:model].name, advertisers(:simple).name
+      assert_equal advertisers(:simple).name, ctx[:model].name
     end
 
     test 'Show No Data' do

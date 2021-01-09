@@ -24,7 +24,7 @@ module MeasurementDetails
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].MeasurementDetails.present?
-      assert_equal ctx[:model].MeasurementDetails.length, ::MeasurementDetail.all.count
+      assert_equal ::MeasurementDetail.all.count, ctx[:model].MeasurementDetails.length
     end
 
     test 'Index Data Related Measurement' do
@@ -32,13 +32,13 @@ module MeasurementDetails
       assert ctx[:model].MeasurementDetails.present?
       ctx[:model].MeasurementDetails.each do |detail|
         details = ::MeasurementDetail.where({ measurement_id: measurement_details(:detail).measurement_id })
-        assert_equal details.pluck(:url).include?(detail.url), true
+        assert_equal true, details.pluck(:url).include?(detail.url)
       end
     end
 
     test 'Index No Data' do
       ::MeasurementDetail.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].MeasurementDetails, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].MeasurementDetails
     end
   end
 end

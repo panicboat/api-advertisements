@@ -31,14 +31,14 @@ module Measurements
     test 'Update Data' do
       ctx = Operation::Update.call(params: { id: measurements(:measurement).id, label: 'spec' }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].label, 'spec'
+      assert_equal 'spec', ctx[:model].label
     end
 
     test 'Update No Data' do
       e = assert_raises InvalidParameters do
         Operation::Update.call(params: { id: -1 })
       end
-      assert_equal JSON.parse(e.message), ['Parameters is invalid']
+      assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end
   end
 end

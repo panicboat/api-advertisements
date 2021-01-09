@@ -31,13 +31,13 @@ module Events
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: events(:install).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::Event.where({ id: events(:install).id }), []
+      assert_equal [], ::Event.where({ id: events(:install).id })
     end
 
     test 'Destory Data Related Campaign' do
       id = events(:install).id
       ::Campaign.find(events(:install).campaign_id).destroy
-      assert_equal ::Event.where({ id: id }), []
+      assert_equal [], ::Event.where({ id: id })
     end
 
     test 'Destroy No Data' do

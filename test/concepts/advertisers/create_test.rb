@@ -31,13 +31,13 @@ module Advertisers
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].name, 'Spec'
+      assert_equal 'Spec', ctx[:model].name
     end
 
     test 'Create Data Related Agency' do
       ctx = Operation::Create.call(params: default_params.merge(agency_id: advertisers(:advertiser_related_agency).agency_id), current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].name, 'Spec'
+      assert_equal 'Spec', ctx[:model].name
     end
 
     test 'Create Duplicate Url' do

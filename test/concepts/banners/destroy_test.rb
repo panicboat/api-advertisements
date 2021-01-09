@@ -31,13 +31,13 @@ module Banners
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: banners(:banner).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::Banner.where({ id: banners(:banner).id }), []
+      assert_equal [], ::Banner.where({ id: banners(:banner).id })
     end
 
     test 'Destory Data Related Product' do
       id = banners(:banner).id
       ::Product.find(banners(:banner).product_id).destroy
-      assert_equal ::Banner.where({ id: id }), []
+      assert_equal [], ::Banner.where({ id: id })
     end
 
     test 'Destroy No Data' do

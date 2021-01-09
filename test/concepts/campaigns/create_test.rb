@@ -31,8 +31,8 @@ module Campaigns
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].platform, 'ios'
-      assert_equal ctx[:model].store_url, 'http://spec.panicboat.net'
+      assert_equal 'ios', ctx[:model].platform
+      assert_equal 'http://spec.panicboat.net', ctx[:model].store_url
     end
 
     test 'Create Duplicate Store Url' do

@@ -31,7 +31,7 @@ module Achievements
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: achievements(:achievement).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::Achievement.where({ id: achievements(:achievement).id }), []
+      assert_equal [], ::Achievement.where({ id: achievements(:achievement).id })
     end
 
     test 'Destroy No Data' do

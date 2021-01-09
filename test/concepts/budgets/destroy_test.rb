@@ -31,13 +31,13 @@ module Budgets
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: budgets(:budget1).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::Budget.where({ id: budgets(:budget1).id }), []
+      assert_equal [], ::Budget.where({ id: budgets(:budget1).id })
     end
 
     test 'Destory Data Related Product' do
       id = budgets(:budget1).id
       ::Product.find(budgets(:budget1).product_id).destroy
-      assert_equal ::Budget.where({ id: id }), []
+      assert_equal [], ::Budget.where({ id: id })
     end
 
     test 'Destroy No Data' do

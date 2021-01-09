@@ -33,7 +33,7 @@ module Budgets
       ctx2 = Operation::Create.call(params: default_params.merge({ start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
       [ctx1, ctx2].each do |ctx|
         assert ctx.success?
-        assert_equal ctx[:model].amount, 100_000
+        assert_equal 100_000, ctx[:model].amount
       end
     end
 
@@ -55,7 +55,7 @@ module Budgets
         Operation::Create.call(params: default_params.merge({ start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }), current_user: @current_user)
       end
       [e1, e2, e3, e4, e5].each do |e|
-        assert_equal JSON.parse(e.message), ['Period has already been taken']
+        assert_equal ['Period has already been taken'], JSON.parse(e.message)
       end
     end
   end

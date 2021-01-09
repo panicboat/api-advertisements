@@ -23,7 +23,7 @@ module Campaigns
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: campaigns(:ios).id }, current_user: @current_user)
-      assert_equal ctx[:model].store_url, campaigns(:ios).store_url
+      assert_equal campaigns(:ios).store_url, ctx[:model].store_url
     end
 
     test 'Show No Data' do

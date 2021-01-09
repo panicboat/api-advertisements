@@ -23,7 +23,7 @@ module Measurements
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: measurements(:measurement).id }, current_user: @current_user)
-      assert_equal ctx[:model].label, measurements(:measurement).label
+      assert_equal measurements(:measurement).label, ctx[:model].label
     end
 
     test 'Show No Data' do

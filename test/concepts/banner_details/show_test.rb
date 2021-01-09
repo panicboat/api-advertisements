@@ -23,7 +23,7 @@ module BannerDetails
 
     test 'Show Data' do
       ctx = Operation::Show.call(params: { id: banner_details(:detail).id }, current_user: @current_user)
-      assert_equal ctx[:model].end_at, banner_details(:detail).end_at
+      assert_equal banner_details(:detail).end_at, ctx[:model].end_at
     end
 
     test 'Show No Data' do

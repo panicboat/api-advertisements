@@ -24,7 +24,7 @@ module Budgets
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].Budgets.present?
-      assert_equal ctx[:model].Budgets.length, ::Budget.all.count
+      assert_equal ::Budget.all.count, ctx[:model].Budgets.length
     end
 
     test 'Index Data Related Product' do
@@ -32,13 +32,13 @@ module Budgets
       assert ctx[:model].Budgets.present?
       ctx[:model].Budgets.each do |budget|
         budgets = ::Budget.where({ product_id: budgets(:budget1).product_id })
-        assert_equal budgets.pluck(:amount).include?(budget.amount), true
+        assert_equal true, budgets.pluck(:amount).include?(budget.amount)
       end
     end
 
     test 'Index No Data' do
       ::Budget.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Budgets, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Budgets
     end
   end
 end

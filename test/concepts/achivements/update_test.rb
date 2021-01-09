@@ -31,7 +31,7 @@ module Achievements
     test 'Update Data' do
       ctx = Operation::Update.call(params: { id: achievements(:achievement).id, label: 'label' }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].label, 'label'
+      assert_equal 'label', ctx[:model].label
     end
   end
 end

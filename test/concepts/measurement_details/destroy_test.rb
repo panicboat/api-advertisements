@@ -31,13 +31,13 @@ module MeasurementDetails
     test 'Destory Data' do
       ctx = Operation::Destroy.call(params: { id: measurement_details(:detail).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ::MeasurementDetail.where({ id: measurement_details(:detail).id }), []
+      assert_equal [], ::MeasurementDetail.where({ id: measurement_details(:detail).id })
     end
 
     test 'Destory Data Related Measurement' do
       id = measurement_details(:detail).id
       ::Measurement.find(measurement_details(:detail).measurement_id).destroy
-      assert_equal ::MeasurementDetail.where({ id: id }), []
+      assert_equal [], ::MeasurementDetail.where({ id: id })
     end
 
     test 'Destroy No Data' do

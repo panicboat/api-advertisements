@@ -12,7 +12,7 @@ module Health
 
     test 'HealthCheck' do
       ctx = Operation::Index.call(params: {})
-      assert_equal ctx[:model].status, Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
+      assert_equal Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok], ctx[:model].status
     end
   end
 end

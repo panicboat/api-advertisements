@@ -24,7 +24,7 @@ module Banners
     test 'Index Data' do
       ctx = Operation::Index.call(params: {}, current_user: @current_user)
       assert ctx[:model].Banners.present?
-      assert_equal ctx[:model].Banners.length, ::Banner.all.count
+      assert_equal ::Banner.all.count, ctx[:model].Banners.length
     end
 
     test 'Index Data Related Product' do
@@ -32,13 +32,13 @@ module Banners
       assert ctx[:model].Banners.present?
       ctx[:model].Banners.each do |banner|
         banners = ::Banner.where({ product_id: banners(:banner).product_id })
-        assert_equal banners.pluck(:label).include?(banner.label), true
+        assert_equal true, banners.pluck(:label).include?(banner.label)
       end
     end
 
     test 'Index No Data' do
       ::Banner.all.each(&:destroy)
-      assert_equal Operation::Index.call(params: {}, current_user: @current_user)[:model].Banners, []
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Banners
     end
   end
 end

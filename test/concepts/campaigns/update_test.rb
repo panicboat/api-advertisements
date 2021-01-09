@@ -31,14 +31,14 @@ module Campaigns
     test 'Update Data' do
       ctx = Operation::Update.call(params: { id: campaigns(:ios).id, store_url: 'https://www.google.com' }, current_user: @current_user)
       assert ctx.success?
-      assert_equal ctx[:model].store_url, 'https://www.google.com'
+      assert_equal 'https://www.google.com', ctx[:model].store_url
     end
 
     test 'Update No Data' do
       e = assert_raises InvalidParameters do
         Operation::Update.call(params: { id: -1 })
       end
-      assert_equal JSON.parse(e.message), ['Parameters is invalid']
+      assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end
   end
 end
