@@ -15,7 +15,7 @@ module Budgets::Contract
     validate  :uniqueness
 
     def uniqueness
-      errors.add(:period, I18n.t('errors.messages.taken')) if ::Budget.where({ product_id: product_id }).where('start_at <= ?', end_at).where('? <= end_at', start_at).present?
+      errors.add(:period, I18n.t('errors.messages.taken')) if ::Budget.where.not({ id: id }).where({ product_id: product_id }).where('start_at <= ?', end_at).where('? <= end_at', start_at).present?
     end
   end
 end

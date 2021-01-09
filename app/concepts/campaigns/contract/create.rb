@@ -13,7 +13,7 @@ module Campaigns::Contract
     validate  :uniqueness
 
     def uniqueness
-      errors.add(:store_url, I18n.t('errors.messages.taken')) if ::Campaign.where({ platform: platform, store_url: store_url }).present?
+      errors.add(:store_url, I18n.t('errors.messages.taken'))  if ::Campaign.where.not({ id: id }).where({ platform: platform, store_url: store_url }).present?
     end
   end
 end

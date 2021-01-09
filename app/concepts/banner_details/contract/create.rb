@@ -12,7 +12,7 @@ module BannerDetails::Contract
     validate  :uniqueness
 
     def uniqueness
-      model = ::BannerDetail.where({ banner_id: banner_id })
+      model = ::BannerDetail.where.not({ id: id }).where({ banner_id: banner_id })
       errors.add(:start_at, I18n.t('errors.messages.taken')) if model.where({ start_at: start_at }).present?
       errors.add(:period, I18n.t('errors.messages.taken')) if start_at.present? && end_at.present? && model.where('start_at <= ?', end_at).where('? <= end_at', start_at).present?
     end

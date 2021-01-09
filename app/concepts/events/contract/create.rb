@@ -11,7 +11,7 @@ module Events::Contract
     validate  :uniqueness
 
     def uniqueness
-      errors.add(:name, I18n.t('errors.messages.taken')) if ::Event.where({ campaign_id: campaign_id, name: name }).present?
+      errors.add(:name, I18n.t('errors.messages.taken')) if ::Event.where.not({ id: id }).where({ campaign_id: campaign_id, name: name }).present?
     end
   end
 end

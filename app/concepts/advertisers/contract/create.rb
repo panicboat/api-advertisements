@@ -13,7 +13,7 @@ module Advertisers::Contract
     validate  :uniqueness
 
     def uniqueness
-      errors.add(:url, I18n.t('errors.messages.taken')) if ::Advertiser.where({ url: url }).present?
+      errors.add(:url, I18n.t('errors.messages.taken')) if ::Advertiser.where.not({ id: id }).where({ url: url }).present?
     end
   end
 end

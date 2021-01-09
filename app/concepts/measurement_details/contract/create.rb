@@ -12,7 +12,7 @@ module MeasurementDetails::Contract
     validate  :uniqueness
 
     def uniqueness
-      model = ::MeasurementDetail.where({ measurement_id: measurement_id })
+      model = ::MeasurementDetail.where.not({ id: id }).where({ measurement_id: measurement_id })
       errors.add(:start_at, I18n.t('errors.messages.taken')) if model.where({ start_at: start_at }).present?
       errors.add(:period, I18n.t('errors.messages.taken')) if start_at.present? && end_at.present? && model.where('start_at <= ?', end_at).where('? <= end_at', start_at).present?
     end

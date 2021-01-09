@@ -21,7 +21,7 @@ module AchievementDetails::Contract
     end
 
     def uniqueness
-      model = ::AchievementDetail.where({ achievement_id: achievement_id })
+      model = ::AchievementDetail.where.not({ id: id }).where({ achievement_id: achievement_id })
       errors.add(:start_at, I18n.t('errors.messages.taken')) if model.where({ start_at: start_at }).present?
       errors.add(:period, I18n.t('errors.messages.taken')) if start_at.present? && end_at.present? && model.where('start_at <= ?', end_at).where('? <= end_at', start_at).present?
     end

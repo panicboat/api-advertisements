@@ -11,7 +11,7 @@ module Measurements::Contract
     validate  :uniqueness
 
     def uniqueness
-      errors.add(:classification, I18n.t('errors.messages.taken')) if classification == 'default' && ::Measurement.where({ campaign_id: campaign_id, classification: classification }).present?
+      errors.add(:classification, I18n.t('errors.messages.taken')) if classification == 'default' && ::Measurement.where.not({ id: id }).where({ campaign_id: campaign_id, classification: classification }).present?
     end
   end
 end
