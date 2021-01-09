@@ -16,4 +16,31 @@ class MeasurementDetailsControllerTest < ActionDispatch::IntegrationTest
     )
     @headers = { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
   end
+
+  test 'Index' do
+    get "/measurements/#{measurement_details(:detail).measurement_id}/details", headers: @headers
+    assert_response :success
+  end
+
+  test 'Show' do
+    get "/measurements/#{measurement_details(:detail).measurement_id}/details/#{measurement_details(:detail).id}", headers: @headers
+    assert_response :success
+  end
+
+  test 'Create' do
+    params = { measurement_id: measurement_details(:detail).measurement_id, url: 'https://measurement.panicboat.net/image.png' }
+    post "/measurements/#{measurement_details(:detail).measurement_id}/details", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Update' do
+    params = { measurement_id: measurement_details(:detail).measurement_id, url: 'https://measurement.panicboat.net/image.png' }
+    patch "/measurements/#{measurement_details(:detail).measurement_id}/details/#{measurement_details(:detail).id}", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Destroy' do
+    delete "/measurements/#{measurement_details(:detail).measurement_id}/details/#{measurement_details(:detail).id}", headers: @headers
+    assert_response :success
+  end
 end
