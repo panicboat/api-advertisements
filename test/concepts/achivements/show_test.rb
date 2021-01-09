@@ -14,11 +14,11 @@ module Achievements
     end
 
     def default_params
-      { label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec' }
     end
 
     def expected_attrs
-      { label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec' }
     end
 
     test 'Show Data' do

@@ -27,7 +27,7 @@ module BannerDetails
       assert_equal ctx[:model].BannerDetails.length, ::BannerDetail.all.count
     end
 
-    test 'Index Data Related Product' do
+    test 'Index Data Related Banner' do
       ctx = Operation::Index.call(params: { banner_id: banner_details(:detail).banner_id }, current_user: @current_user)
       assert ctx[:model].BannerDetails.present?
       ctx[:model].BannerDetails.each do |detail|

@@ -27,7 +27,7 @@ module AchievementDetails
       assert_equal ctx[:model].AchievementDetails.length, ::AchievementDetail.all.count
     end
 
-    test 'Index Data Related Product' do
+    test 'Index Data Related Achievement' do
       ctx = Operation::Index.call(params: { achievement_id: achievement_details(:detail).achievement_id }, current_user: @current_user)
       assert ctx[:model].AchievementDetails.present?
       ctx[:model].AchievementDetails.each do |detail|

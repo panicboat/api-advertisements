@@ -27,7 +27,7 @@ module MeasurementDetails
       assert_equal ctx[:model].MeasurementDetails.length, ::MeasurementDetail.all.count
     end
 
-    test 'Index Data Related Product' do
+    test 'Index Data Related Measurement' do
       ctx = Operation::Index.call(params: { measurement_id: measurement_details(:detail).measurement_id }, current_user: @current_user)
       assert ctx[:model].MeasurementDetails.present?
       ctx[:model].MeasurementDetails.each do |detail|

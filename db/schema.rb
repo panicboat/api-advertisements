@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_000000) do
+ActiveRecord::Schema.define(version: 2020_11_02_060000) do
 
   create_table "achievement_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "単価詳細", force: :cascade do |t|
     t.bigint "achievement_id", null: false, comment: "単価ID"
@@ -26,10 +26,12 @@ ActiveRecord::Schema.define(version: 2020_11_07_000000) do
   end
 
   create_table "achievements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "単価", force: :cascade do |t|
+    t.bigint "event_id", null: false, comment: "イベントID"
     t.string "label", comment: "ラベル"
     t.integer "status", limit: 3, null: false, comment: "ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_achievements_on_event_id"
   end
 
   create_table "advertisers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "広告主", force: :cascade do |t|
@@ -122,17 +124,6 @@ ActiveRecord::Schema.define(version: 2020_11_07_000000) do
     t.index ["campaign_id"], name: "index_events_on_campaign_id"
   end
 
-  create_table "map_event_achievements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "イベント成果報酬", force: :cascade do |t|
-    t.bigint "event_id", null: false, comment: "イベントID"
-    t.bigint "achievement_id", null: false, comment: "成果報酬ID"
-    t.integer "classification", limit: 3, null: false, comment: "単価種別"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["achievement_id"], name: "index_map_event_achievements_on_achievement_id"
-    t.index ["event_id", "achievement_id"], name: "index_map_event_achievements_on_event_id_and_achievement_id", unique: true
-    t.index ["event_id"], name: "index_map_event_achievements_on_event_id"
-  end
-
   create_table "measurement_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "計測詳細", force: :cascade do |t|
     t.bigint "measurement_id", null: false, comment: "計測詳細ID"
     t.datetime "start_at", comment: "開始日時"
@@ -166,6 +157,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_000000) do
   end
 
   add_foreign_key "achievement_details", "achievements"
+  add_foreign_key "achievements", "events"
   add_foreign_key "advertisers", "agencies"
   add_foreign_key "banner_details", "banners"
   add_foreign_key "banners", "products"
@@ -173,8 +165,6 @@ ActiveRecord::Schema.define(version: 2020_11_07_000000) do
   add_foreign_key "budget_details", "campaigns"
   add_foreign_key "campaigns", "products"
   add_foreign_key "events", "campaigns"
-  add_foreign_key "map_event_achievements", "achievements"
-  add_foreign_key "map_event_achievements", "events"
   add_foreign_key "measurement_details", "measurements"
   add_foreign_key "measurements", "campaigns"
   add_foreign_key "products", "advertisers"

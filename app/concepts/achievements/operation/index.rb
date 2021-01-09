@@ -10,6 +10,7 @@ module Achievements::Operation
     def model(ctx, **)
       contract = ctx[:"contract.default"]
       data = scrape(ctx).paging(contract.limit, contract.offset).order(contract.order)
+      data = data.where({ event_id: contract.event_id }) if contract.event_id.present?
       ctx[:model] = OpenStruct.new({ Achievements: data })
     end
   end

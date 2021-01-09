@@ -14,11 +14,11 @@ module Achievements
     end
 
     def default_params
-      { label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec' }
     end
 
     def expected_attrs
-      { label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec' }
     end
 
     test 'Index Data' do
@@ -27,11 +27,11 @@ module Achievements
       assert_equal ctx[:model].Achievements.length, ::Achievement.all.count
     end
 
-    test 'Index Data Related Product' do
-      ctx = Operation::Index.call(params: {}, current_user: @current_user)
+    test 'Index Data Related Event' do
+      ctx = Operation::Index.call(params: { event_id: achievements(:achievement).event_id }, current_user: @current_user)
       assert ctx[:model].Achievements.present?
       ctx[:model].Achievements.each do |achievement|
-        achievements = ::Achievement.where({})
+        achievements = ::Achievement.where({ event_id: achievements(:achievement).event_id })
         assert_equal achievements.pluck(:label).include?(achievement.label), true
       end
     end
