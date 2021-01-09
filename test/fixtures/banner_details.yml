@@ -4,3 +4,28 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+detail:
+  id: 1
+  banner_id: 1
+  start_at: 2019-08-05 00:00:00
+  end_at: 2019-09-15 23:59:59
+  url: https://banner.panicboat.net/image1.png
+
+detail1:
+  id: 2
+  banner_id: 2
+  start_at: 2019-08-05 00:00:00
+  end_at: 2019-09-15 23:59:59
+  url: https://banner.panicboat.net/image2.png
+
+detail2:
+  id: 3
+  banner_id: 2
+  start_at: 2020-08-05 00:00:00
+  end_at: 2020-09-15 23:59:59
+  url: https://banner.panicboat.net/image3.png
+
+detail3:
+  id: 4
+  banner_id: 2
+  url: https://banner.panicboat.net/image4.png

@@ -27,16 +27,6 @@ services:
     networks:
       - default
       - panicboat
-  xray:
-    image: amazon/aws-xray-daemon
-    command: ['-o']
-    environment:
-      - TZ=Asia/Tokyo
-      - AWS_REGION=ap-northeast-1
-    volumes:
-      - ~/.aws/:/root/.aws/:ro
-    networks:
-      - default
 volumes:
   mysql-data:
     driver: local

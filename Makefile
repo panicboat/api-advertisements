@@ -5,7 +5,6 @@ DATABASE_NAME=advertisements
 init:
 	@if [ -z "`docker network ls | grep ${DOCKER_NETWORK}`" ]; then docker network create ${DOCKER_NETWORK}; fi
 	docker-compose build --no-cache
-	docker-compose up -d xray
 	docker-compose up -d db
 	docker-compose run ${CONTAINER_NAME} rake db:create
 	docker-compose run ${CONTAINER_NAME} rake db:migrate

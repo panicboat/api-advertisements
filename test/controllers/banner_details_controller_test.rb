@@ -16,4 +16,31 @@ class BannerDetailsControllerTest < ActionDispatch::IntegrationTest
     )
     @headers = { "#{::RequestHeader::USER_CLAIMS}": 'dummy' }
   end
+
+  test 'Index' do
+    get "/banners/#{banner_details(:detail).banner_id}/details", headers: @headers
+    assert_response :success
+  end
+
+  test 'Show' do
+    get "/banners/#{banner_details(:detail).banner_id}/details/#{banner_details(:detail).id}", headers: @headers
+    assert_response :success
+  end
+
+  test 'Create' do
+    params = { banner_id: banner_details(:detail).banner_id, url: 'https://banner.panicboat.net/image.png' }
+    post "/banners/#{banner_details(:detail).banner_id}/details", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Update' do
+    params = { banner_id: banner_details(:detail).banner_id, url: 'https://banner.panicboat.net/image.png' }
+    patch "/banners/#{banner_details(:detail).banner_id}/details/#{banner_details(:detail).id}", headers: @headers, params: params
+    assert_response :success
+  end
+
+  test 'Destroy' do
+    delete "/banners/#{banner_details(:detail).banner_id}/details/#{banner_details(:detail).id}", headers: @headers
+    assert_response :success
+  end
 end
