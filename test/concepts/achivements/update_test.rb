@@ -38,7 +38,7 @@ module Achievements
       e = assert_raises InvalidParameters do
         Operation::Update.call(params: { id: achievements(:achievement1).id, label: 'label', default: 'true' }, current_user: @current_user)
       end
-      assert_equal ['Campaign default has already been taken'], JSON.parse(e.message)
+      assert_equal ['Event default has already been taken'], JSON.parse(e.message)
     end
   end
 end
