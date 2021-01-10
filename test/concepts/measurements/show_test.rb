@@ -14,11 +14,11 @@ module Measurements
     end
 
     def default_params
-      { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+      { campaign_id: measurements(:measurement).campaign_id, default: 'false' }
     end
 
     def expected_attrs
-      { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+      { campaign_id: measurements(:measurement).campaign_id, default: 'false' }
     end
 
     test 'Show Data' do

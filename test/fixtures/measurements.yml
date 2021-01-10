@@ -8,5 +8,5 @@ measurement:
   id: 1
   campaign_id: 1
   label: measurement
-  classification: default
+  default: true
   status: available

@@ -14,22 +14,22 @@ module Measurements
     end
 
     def default_params
-      { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+      { campaign_id: measurements(:measurement).campaign_id, default: 'false' }
     end
 
     def expected_attrs
-      { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+      { campaign_id: measurements(:measurement).campaign_id, default: 'false' }
     end
 
     test 'Permission Deny : No Session' do
       e = assert_raises InvalidPermissions do
-        Operation::Update.call(params: { id: measurements(:measurement).id, label: 'spec' })
+        Operation::Update.call(params: { id: measurements(:measurement).id, default: 'false', label: 'spec' })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: measurements(:measurement).id, label: 'spec' }, current_user: @current_user)
+      ctx = Operation::Update.call(params: { id: measurements(:measurement).id, default: 'false', label: 'spec' }, current_user: @current_user)
       assert ctx.success?
       assert_equal 'spec', ctx[:model].label
     end

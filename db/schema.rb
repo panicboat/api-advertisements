@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
 
   create_table "banners", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "バナー", force: :cascade do |t|
     t.bigint "product_id", null: false, comment: "プロダクトID"
-    t.integer "classification", limit: 3, null: false, comment: "バナー種別"
     t.string "label", comment: "ラベル"
+    t.integer "classification", limit: 3, null: false, comment: "バナー種別"
     t.integer "status", limit: 3, null: false, comment: "ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
   create_table "measurements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "計測", force: :cascade do |t|
     t.bigint "campaign_id", null: false, comment: "キャンペーンID"
     t.string "label", comment: "ラベル"
-    t.integer "classification", limit: 3, null: false, comment: "計測種別"
+    t.boolean "default", null: false, comment: "デフォルト"
     t.integer "status", limit: 3, null: false, comment: "ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

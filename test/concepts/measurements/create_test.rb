@@ -14,11 +14,11 @@ module Measurements
     end
 
     def default_params
-      { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+      { campaign_id: measurements(:measurement).campaign_id, default: 'false' }
     end
 
     def expected_attrs
-      { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+      { campaign_id: measurements(:measurement).campaign_id, default: 'false' }
     end
 
     test 'Permission Deny' do
@@ -32,16 +32,13 @@ module Measurements
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
       assert_equal measurements(:measurement).campaign_id, ctx[:model].campaign_id
-      assert_equal 'designated', ctx[:model].classification
     end
 
-    test 'Create Duplicate Classification' do
-      Operation::Create.call(params: default_params, current_user: @current_user)
-      Operation::Create.call(params: default_params, current_user: @current_user)
+    test 'Create Duplicate Default' do
       e = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ classification: 'default' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ default: 'true' }), current_user: @current_user)
       end
-      assert_equal ['Classification has already been taken'], JSON.parse(e.message)
+      assert_equal ['Campaign default has already been taken'], JSON.parse(e.message)
     end
   end
 end

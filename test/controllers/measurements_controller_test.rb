@@ -28,13 +28,13 @@ class MeasurementsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Create' do
-    params = { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+    params = { campaign_id: measurements(:measurement).campaign_id, default: false }
     post '/measurements', headers: @headers, params: params
     assert_response :success
   end
 
   test 'Update' do
-    params = { campaign_id: measurements(:measurement).campaign_id, classification: 'designated' }
+    params = { campaign_id: measurements(:measurement).campaign_id, default: false }
     patch "/measurements/#{measurements(:measurement).id}", headers: @headers, params: params
     assert_response :success
   end
