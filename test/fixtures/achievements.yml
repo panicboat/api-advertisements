@@ -7,11 +7,13 @@
 achievement:
   id: 1
   event_id: 1
+  default: true
   label: achievement
   status: available
 
 achievement1:
   id: 2
   event_id: 1
+  default: false
   label: achievement1
   status: available

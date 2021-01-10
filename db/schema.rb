@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
   create_table "achievements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "単価", force: :cascade do |t|
     t.bigint "event_id", null: false, comment: "イベントID"
     t.string "label", comment: "ラベル"
+    t.boolean "default", null: false, comment: "デフォルト設定"
     t.integer "status", limit: 3, null: false, comment: "ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -138,7 +139,7 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
   create_table "measurements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "計測", force: :cascade do |t|
     t.bigint "campaign_id", null: false, comment: "キャンペーンID"
     t.string "label", comment: "ラベル"
-    t.boolean "default", null: false, comment: "デフォルト"
+    t.boolean "default", null: false, comment: "デフォルト設定"
     t.integer "status", limit: 3, null: false, comment: "ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

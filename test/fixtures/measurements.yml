@@ -10,3 +10,10 @@ measurement:
   label: measurement
   default: true
   status: available
+
+measurement1:
+  id: 2
+  campaign_id: 1
+  label: measurement
+  default: false
+  status: available

@@ -8,7 +8,6 @@ init:
 	docker-compose up -d db
 	docker-compose run ${CONTAINER_NAME} rake db:create
 	docker-compose run ${CONTAINER_NAME} rake db:migrate
-	docker-compose run ${CONTAINER_NAME} rake db:migrate RAILS_ENV=test
 
 seed:
 	docker-compose run ${CONTAINER_NAME} rake db:seed

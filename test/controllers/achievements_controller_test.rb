@@ -28,13 +28,13 @@ class AchievementsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Create' do
-    params = { event_id: achievements(:achievement).event_id, label: 'label' }
+    params = { event_id: achievements(:achievement).event_id, label: 'label', default: false }
     post '/achievements', headers: @headers, params: params
     assert_response :success
   end
 
   test 'Update' do
-    params = { event_id: achievements(:achievement).event_id, label: 'label' }
+    params = { event_id: achievements(:achievement).event_id, label: 'label', default: false }
     patch "/achievements/#{achievements(:achievement).id}", headers: @headers, params: params
     assert_response :success
   end

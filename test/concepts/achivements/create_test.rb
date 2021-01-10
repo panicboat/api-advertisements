@@ -14,11 +14,11 @@ module Achievements
     end
 
     def default_params
-      { event_id: achievements(:achievement).event_id, label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec', default: 'false' }
     end
 
     def expected_attrs
-      { event_id: achievements(:achievement).event_id, label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec', default: 'false' }
     end
 
     test 'Permission Deny' do
@@ -32,6 +32,13 @@ module Achievements
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
       assert_equal 'Spec', ctx[:model].label
+    end
+
+    test 'Create Duplicate Default' do
+      e = assert_raises InvalidParameters do
+        Operation::Create.call(params: default_params.merge({ default: 'true' }), current_user: @current_user)
+      end
+      assert_equal ['Event default has already been taken'], JSON.parse(e.message)
     end
   end
 end

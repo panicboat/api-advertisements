@@ -2,6 +2,7 @@ module Achievements::Representer
   class Show < Abstract::Representer
     property :id
     property :event_id
+    property :default
     property :label
     property :status
     property :created_at

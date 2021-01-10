@@ -14,11 +14,11 @@ module Achievements
     end
 
     def default_params
-      { event_id: achievements(:achievement).event_id, label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec', default: 'false' }
     end
 
     def expected_attrs
-      { event_id: achievements(:achievement).event_id, label: 'Spec' }
+      { event_id: achievements(:achievement).event_id, label: 'Spec', default: 'false' }
     end
 
     test 'Permission Deny' do
