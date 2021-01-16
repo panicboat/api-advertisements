@@ -1,9 +1,7 @@
 module Advertisers::Contract
   class Show < Abstract::Contract
-    class Show < Abstract::Contract
-      property  :id
+    property  :id
 
-      validates :id, presence: true, numericality: true
-    end
+    validates :id, presence: true, numericality: true
   end
 end
