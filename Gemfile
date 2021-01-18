@@ -54,6 +54,7 @@ end
 group :test do
   gem 'codecov'
   gem 'dotenv-rails'
+  gem 'minitest-stub_any_instance'
   gem 'simplecov'
   gem 'trailblazer-test'
   gem 'webmock'

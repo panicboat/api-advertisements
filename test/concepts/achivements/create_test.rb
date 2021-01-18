@@ -29,14 +29,14 @@ module Achievements
     end
 
     test 'Create Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
+      ctx = Operation::Create.call(params: default_params,current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'Spec', ctx[:model].label
     end
 
     test 'Create Duplicate Default' do
       e = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ default: 'true' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ default: 'true' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Event default has already been taken'], JSON.parse(e.message)
     end

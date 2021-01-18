@@ -22,13 +22,13 @@ module Achievements
     end
 
     test 'Show Data' do
-      ctx = Operation::Show.call(params: { id: achievements(:achievement).id }, current_user: @current_user)
+      ctx = Operation::Show.call(params: { id: achievements(:achievement).id },current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert_equal achievements(:achievement).label, ctx[:model].label
     end
 
     test 'Show No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Show.call(params: { id: -1 }, current_user: @current_user)
+        Operation::Show.call(params: { id: -1 },current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end

@@ -29,7 +29,7 @@ module Campaigns
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: campaigns(:ios).id, store_url: 'https://www.google.com' }, current_user: @current_user)
+      ctx = Operation::Update.call(params: { id: campaigns(:ios).id, store_url: 'https://www.google.com' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'https://www.google.com', ctx[:model].store_url
     end

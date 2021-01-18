@@ -29,7 +29,7 @@ module Events
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { id: events(:install).id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { id: events(:install).id },current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal [], ::Event.where({ id: events(:install).id })
     end
@@ -42,7 +42,7 @@ module Events
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { id: -1 }, current_user: @current_user)
+        Operation::Destroy.call(params: { id: -1 },current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end

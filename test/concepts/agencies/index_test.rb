@@ -22,14 +22,14 @@ module Agencies
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: {}, current_user: @current_user)
+      ctx = Operation::Index.call(params: {},current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].Agencies.present?
       assert_equal ::Agency.all.count, ctx[:model].Agencies.length
     end
 
     test 'Index No Data' do
       ::Agency.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Agencies
+      assert_equal [], Operation::Index.call(params: {},current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].Agencies
     end
   end
 end

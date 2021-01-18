@@ -29,8 +29,8 @@ module BannerDetails
     end
 
     test 'Create Data' do
-      ctx1 = Operation::Create.call(params: default_params.merge({ start_at: '2019-07-01 00:00:00', end_at: '2019-08-04 23:59:59' }), current_user: @current_user)
-      ctx2 = Operation::Create.call(params: default_params.merge({ start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
+      ctx1 = Operation::Create.call(params: default_params.merge({ start_at: '2019-07-01 00:00:00', end_at: '2019-08-04 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx2 = Operation::Create.call(params: default_params.merge({ start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       [ctx1, ctx2].each do |ctx|
         assert ctx.success?
         assert_equal 'https://banner.panicboat.net/image.png', ctx[:model].url
@@ -38,24 +38,24 @@ module BannerDetails
     end
 
     test 'Create Duplicate Term' do
-      Operation::Create.call(params: default_params, current_user: @current_user)
+      Operation::Create.call(params: default_params,current_user: @current_user, action: 'DUMMY_ACTION_ID')
       e1 = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ start_at: '2019-07-01 00:00:00', end_at: '2019-08-31 23:59:59' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ start_at: '2019-07-01 00:00:00', end_at: '2019-08-31 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e2 = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ start_at: '2019-08-10 00:00:00', end_at: '2019-09-20 23:59:59' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ start_at: '2019-08-10 00:00:00', end_at: '2019-09-20 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e3 = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ start_at: '2019-09-15 00:00:00', end_at: '2019-10-10 23:59:59' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ start_at: '2019-09-15 00:00:00', end_at: '2019-10-10 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e4 = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ start_at: '2019-08-01 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ start_at: '2019-08-01 00:00:00', end_at: '2019-09-30 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e5 = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e6 = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ end_at: '2019-08-31 23:59:59' }), current_user: @current_user)
+        Operation::Create.call(params: default_params.merge({ end_at: '2019-08-31 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       [e1, e2, e3, e4, e5].each do |e|
         assert_equal ['Period has already been taken'], JSON.parse(e.message)

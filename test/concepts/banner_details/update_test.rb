@@ -29,14 +29,14 @@ module BannerDetails
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: banner_details(:detail).id, url: 'https://banner.panicboat.net/update.png' }, current_user: @current_user)
+      ctx = Operation::Update.call(params: { id: banner_details(:detail).id, url: 'https://banner.panicboat.net/update.png' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'https://banner.panicboat.net/update.png', ctx[:model].url
     end
 
     test 'Update Data More Than Once' do
-      ctx1 = Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-07-01 00:00:00', end_at: '2019-08-04 23:59:59' }), current_user: @current_user)
-      ctx2 = Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
+      ctx1 = Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-07-01 00:00:00', end_at: '2019-08-04 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx2 = Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-09-16 00:00:00', end_at: '2019-09-30 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       [ctx1, ctx2].each do |ctx|
         assert ctx.success?
         assert_equal 'https://banner.panicboat.net/image.png', ctx[:model].url
@@ -45,19 +45,19 @@ module BannerDetails
 
     test 'Update Duplicate Term' do
       e1 = assert_raises InvalidParameters do
-        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-07-01 00:00:00', end_at: '2019-08-31 23:59:59' }), current_user: @current_user)
+        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-07-01 00:00:00', end_at: '2019-08-31 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e2 = assert_raises InvalidParameters do
-        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-08-10 00:00:00', end_at: '2019-09-20 23:59:59' }), current_user: @current_user)
+        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-08-10 00:00:00', end_at: '2019-09-20 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e3 = assert_raises InvalidParameters do
-        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-09-15 00:00:00', end_at: '2019-10-10 23:59:59' }), current_user: @current_user)
+        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-09-15 00:00:00', end_at: '2019-10-10 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e4 = assert_raises InvalidParameters do
-        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-08-01 00:00:00', end_at: '2019-09-30 23:59:59' }), current_user: @current_user)
+        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-08-01 00:00:00', end_at: '2019-09-30 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       e5 = assert_raises InvalidParameters do
-        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }), current_user: @current_user)
+        Operation::Update.call(params: default_params.merge({ id: banner_details(:detail2).id, start_at: '2019-08-15 00:00:00', end_at: '2019-09-05 23:59:59' }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       [e1, e2, e3, e4, e5].each do |e|
         assert_equal ['Period has already been taken'], JSON.parse(e.message)
