@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_060000) do
+ActiveRecord::Schema.define(version: 2021_02_22_020000) do
 
   create_table "achievement_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "単価詳細", force: :cascade do |t|
     t.bigint "achievement_id", null: false, comment: "単価ID"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["achievement_id", "start_at"], name: "index_achievement_details_on_achievement_id_and_start_at", unique: true
     t.index ["achievement_id"], name: "index_achievement_details_on_achievement_id"
+  end
+
+  create_table "achievement_principals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "単価PRN", force: :cascade do |t|
+    t.bigint "achievement_id", null: false, comment: "単価ID"
+    t.bigint "campaign_principal_id", null: false, comment: "キャンペーンPRN"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["achievement_id", "campaign_principal_id"], name: "index_achievement_principals_unique", unique: true
+    t.index ["achievement_id"], name: "index_achievement_principals_on_achievement_id"
+    t.index ["campaign_principal_id"], name: "index_achievement_principals_on_campaign_principal_id"
   end
 
   create_table "achievements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "単価", force: :cascade do |t|
@@ -102,6 +112,15 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
     t.index ["product_id"], name: "index_budgets_on_product_id"
   end
 
+  create_table "campaign_principals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "キャンペーンPRN", force: :cascade do |t|
+    t.bigint "campaign_id", null: false, comment: "キャンペーンID"
+    t.string "princiapal", null: false, comment: "リソース名"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["campaign_id", "princiapal"], name: "index_campaign_principals_on_campaign_id_and_princiapal", unique: true
+    t.index ["campaign_id"], name: "index_campaign_principals_on_campaign_id"
+  end
+
   create_table "campaigns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "キャンペーン", force: :cascade do |t|
     t.bigint "product_id", null: false, comment: "プロダクトID"
     t.integer "platform", limit: 3, null: false, comment: "プラットフォーム"
@@ -136,6 +155,16 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
     t.index ["measurement_id"], name: "index_measurement_details_on_measurement_id"
   end
 
+  create_table "measurement_principals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "計測PRN", force: :cascade do |t|
+    t.bigint "measurement_id", null: false, comment: "計測ID"
+    t.bigint "campaign_principal_id", null: false, comment: "キャンペーンPRN"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["campaign_principal_id"], name: "index_measurement_principals_on_campaign_principal_id"
+    t.index ["measurement_id", "campaign_principal_id"], name: "index_measurement_principals_unique", unique: true
+    t.index ["measurement_id"], name: "index_measurement_principals_on_measurement_id"
+  end
+
   create_table "measurements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "計測", force: :cascade do |t|
     t.bigint "campaign_id", null: false, comment: "キャンペーンID"
     t.string "label", comment: "ラベル"
@@ -158,15 +187,20 @@ ActiveRecord::Schema.define(version: 2020_11_02_060000) do
   end
 
   add_foreign_key "achievement_details", "achievements"
+  add_foreign_key "achievement_principals", "achievements"
+  add_foreign_key "achievement_principals", "campaign_principals"
   add_foreign_key "achievements", "events"
   add_foreign_key "advertisers", "agencies"
   add_foreign_key "banner_details", "banners"
   add_foreign_key "banners", "products"
   add_foreign_key "budget_details", "budgets"
   add_foreign_key "budget_details", "campaigns"
+  add_foreign_key "campaign_principals", "campaigns"
   add_foreign_key "campaigns", "products"
   add_foreign_key "events", "campaigns"
   add_foreign_key "measurement_details", "measurements"
+  add_foreign_key "measurement_principals", "campaign_principals"
+  add_foreign_key "measurement_principals", "measurements"
   add_foreign_key "measurements", "campaigns"
   add_foreign_key "products", "advertisers"
 end

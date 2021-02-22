@@ -20,4 +20,8 @@ Rails.application.routes.draw do
   resources :measurements,  only: %i[index show create update destroy] do
     resources :details,     only: %i[index show create update destroy], controller: 'measurement_details'
   end
+  resources :princiapals, only: %i[index create destroy], controller: 'campaign_principals' do
+    resources :achievements,  only: %i[index create destroy], controller: 'achievement_principals'
+    resources :measurements,  only: %i[index create destroy], controller: 'measurement_principals'
+  end
 end
