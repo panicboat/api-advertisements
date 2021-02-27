@@ -29,7 +29,7 @@ module BudgetDetails
     end
 
     test 'Create Data' do
-      ctx = Operation::Create.call(params: default_params,current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal budget_details(:detail).budget_id, ctx[:model].budget_id
       assert_equal campaigns(:other).id, ctx[:model].campaign_id
@@ -37,16 +37,16 @@ module BudgetDetails
     end
 
     test 'Create Duplicate Data' do
-      Operation::Create.call(params: default_params,current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       e = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params,current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Campaign has already been taken'], JSON.parse(e.message)
     end
 
     test 'Total Amount is Invalid' do
       e = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params.merge({ amount: 100_001 }),current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Create.call(params: default_params.merge({ amount: 100_001 }), current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Total amount is invalid'], JSON.parse(e.message)
     end

@@ -29,7 +29,7 @@ module Measurements
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: measurements(:measurement).id, default: 'false', label: 'spec' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Update.call(params: { id: measurements(:measurement).id, default: 'false', label: 'spec' }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'spec', ctx[:model].label
     end
@@ -43,7 +43,7 @@ module Measurements
 
     test 'Update Duplicate Data' do
       e = assert_raises InvalidParameters do
-        Operation::Update.call(params: { id: measurements(:measurement1).id, label: 'label', default: 'true' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Update.call(params: { id: measurements(:measurement1).id, label: 'label', default: 'true' }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Campaign default has already been taken'], JSON.parse(e.message)
     end

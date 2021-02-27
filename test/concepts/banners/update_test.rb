@@ -29,7 +29,7 @@ module Banners
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: banners(:banner).id, label: 'label' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Update.call(params: { id: banners(:banner).id, label: 'label' }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'label', ctx[:model].label
     end

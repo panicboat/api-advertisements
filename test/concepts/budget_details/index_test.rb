@@ -22,13 +22,13 @@ module BudgetDetails
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: {},current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].BudgetDetails.present?
       assert_equal ::BudgetDetail.all.count, ctx[:model].BudgetDetails.length
     end
 
     test 'Index Data Related Budget' do
-      ctx = Operation::Index.call(params: { budget_id: budget_details(:detail).budget_id },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Index.call(params: { budget_id: budget_details(:detail).budget_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].BudgetDetails.present?
       ctx[:model].BudgetDetails.each do |budget_detail|
         budget_details = ::BudgetDetail.where({ budget_id: budget_details(:detail).budget_id })
@@ -38,7 +38,7 @@ module BudgetDetails
 
     test 'Index No Data' do
       ::BudgetDetail.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: {},current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].BudgetDetails
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].BudgetDetails
     end
   end
 end

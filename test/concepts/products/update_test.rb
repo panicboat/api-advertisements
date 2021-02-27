@@ -29,7 +29,7 @@ module Products
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: products(:simple).id, name: 'This is name.' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Update.call(params: { id: products(:simple).id, name: 'This is name.' }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert_equal 'This is name.', ctx[:model].name
     end
 

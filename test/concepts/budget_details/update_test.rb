@@ -29,14 +29,14 @@ module BudgetDetails
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: budget_details(:detail).id, amount: 70_000 },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Update.call(params: { id: budget_details(:detail).id, amount: 70_000 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 70_000, ctx[:model].amount
     end
 
     test 'Total Amount is Invalid' do
       e = assert_raises InvalidParameters do
-        Operation::Update.call(params: { id: budget_details(:detail).id, amount: 600_001 },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Update.call(params: { id: budget_details(:detail).id, amount: 600_001 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Total amount is invalid'], JSON.parse(e.message)
     end

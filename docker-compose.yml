@@ -23,7 +23,7 @@ services:
     volumes:
       - .:/app
       - ~/.aws/:/root/.aws/:ro
-      # - ~/workspaces/api-engine:/app/engine
+      # - ~/workspaces/api-engine:/engine
     networks:
       - default
       - panicboat

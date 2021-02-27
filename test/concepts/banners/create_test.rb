@@ -29,7 +29,7 @@ module Banners
     end
 
     test 'Create Data' do
-      ctx = Operation::Create.call(params: default_params,current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'Spec', ctx[:model].label
     end

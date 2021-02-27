@@ -114,10 +114,10 @@ ActiveRecord::Schema.define(version: 2021_02_22_020000) do
 
   create_table "campaign_principals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "キャンペーンPRN", force: :cascade do |t|
     t.bigint "campaign_id", null: false, comment: "キャンペーンID"
-    t.string "princiapal", null: false, comment: "リソース名"
+    t.string "principal", null: false, comment: "リソース名"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["campaign_id", "princiapal"], name: "index_campaign_principals_on_campaign_id_and_princiapal", unique: true
+    t.index ["campaign_id", "principal"], name: "index_campaign_principals_on_campaign_id_and_principal", unique: true
     t.index ["campaign_id"], name: "index_campaign_principals_on_campaign_id"
   end
 

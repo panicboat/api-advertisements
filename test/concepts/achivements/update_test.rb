@@ -29,14 +29,14 @@ module Achievements
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: achievements(:achievement).id, label: 'label', default: 'false' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Update.call(params: { id: achievements(:achievement).id, label: 'label', default: 'false' }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'label', ctx[:model].label
     end
 
     test 'Update Duplicate Data' do
       e = assert_raises InvalidParameters do
-        Operation::Update.call(params: { id: achievements(:achievement1).id, label: 'label', default: 'true' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Update.call(params: { id: achievements(:achievement1).id, label: 'label', default: 'true' }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Event default has already been taken'], JSON.parse(e.message)
     end

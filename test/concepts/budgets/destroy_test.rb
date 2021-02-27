@@ -29,7 +29,7 @@ module Budgets
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { id: budgets(:budget1).id },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Destroy.call(params: { id: budgets(:budget1).id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal [], ::Budget.where({ id: budgets(:budget1).id })
     end
@@ -42,7 +42,7 @@ module Budgets
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { id: -1 },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Destroy.call(params: { id: -1 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end

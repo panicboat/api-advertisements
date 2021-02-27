@@ -29,7 +29,7 @@ module Advertisers
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: advertisers(:simple).id, name: 'This is name.' },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Update.call(params: { id: advertisers(:simple).id, name: 'This is name.' }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'This is name.', ctx[:model].name
     end

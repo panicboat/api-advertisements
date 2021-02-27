@@ -29,7 +29,7 @@ module MeasurementDetails
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { id: measurement_details(:detail).id },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Destroy.call(params: { id: measurement_details(:detail).id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal [], ::MeasurementDetail.where({ id: measurement_details(:detail).id })
     end
@@ -42,7 +42,7 @@ module MeasurementDetails
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { id: -1 },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Destroy.call(params: { id: -1 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end

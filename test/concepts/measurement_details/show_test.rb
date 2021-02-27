@@ -22,13 +22,13 @@ module MeasurementDetails
     end
 
     test 'Show Data' do
-      ctx = Operation::Show.call(params: { id: measurement_details(:detail).id },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+      ctx = Operation::Show.call(params: { id: measurement_details(:detail).id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert_equal measurement_details(:detail).end_at, ctx[:model].end_at
     end
 
     test 'Show No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Show.call(params: { id: -1 },current_user: @current_user, action: 'DUMMY_ACTION_ID')
+        Operation::Show.call(params: { id: -1 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end
